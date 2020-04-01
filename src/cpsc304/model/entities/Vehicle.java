@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 public class Vehicle {
     public int vehicle_id;

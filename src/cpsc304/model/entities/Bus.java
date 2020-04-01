@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 public class Bus {
     public int vehicle_id;
