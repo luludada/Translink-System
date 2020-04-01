@@ -1,4 +1,4 @@
-package database;
+package cpsc304.database;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package model.entities;
+package cpsc304.model.entities;
 
 public class Bus {
     public int vehicle_id;

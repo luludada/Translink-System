@@ -1,4 +1,4 @@
-package model.report;
+package cpsc304.model.report;
 
 public class scheduleReport {
 }
