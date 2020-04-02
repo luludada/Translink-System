@@ -1,3 +1,4 @@
+drop table passenger_take_vehicle;
 drop table passenger_card1;
 drop table passenger_card2;
 drop table obtain_schedule;
@@ -97,15 +98,21 @@ create table passenger_card2(
 create table passenger_card1(
 	sin integer primary key,
 	phone char(20),
-	vehicle_id integer,
-	fee number(10,2),
 	user_id char(20) not null unique,
 	email char(20),
-	pin char(20),
+	pin integer,
 	card_num char(20) unique,
-	foreign key (phone) references passenger_card2,
-	foreign key (vehicle_id) references vehicle_follow_drive1,
+    foreign key (phone) references passenger_card2,
 	foreign key (card_num) references card);
+
+create table passenger_take_vehicle (
+    sin integer,
+    tk_time timestamp,
+    fee number(10,2),
+    vehicle_id integer,
+    primary key (sin, tk_time, vehicle_id),
+    foreign key (sin) references passenger_card1 on delete cascade,
+    foreign key (vehicle_id) references vehicle_follow_drive1);
  
  
 insert into station
@@ -394,17 +401,34 @@ insert into passenger_card2
 values ( '7783334444' , 'Elsa' );
 
 insert into passenger_card1
-values ( '501' , '7780000000' , '10' , '2.85' , 'aaaaa' , 'aaaaa@ubc.ca' , '100' , '1000' );
+values ( '501' , '7780000000' , 'aaaaa' , 'aaaaa@ubc.ca' , '100' , '1000' );
 
 insert into passenger_card1
-values ( '502' , '7785556666' , '11' , '2.85' , 'bbbbb' , 'bbbbb@ubc.ca' , '200' , '2000' );
+values ( '502' , '7785556666' , 'bbbbb' , 'bbbbb@ubc.ca' , '200' , '2000' );
 
 insert into passenger_card1
-values ( '503' , '7788889999' , '12' , '2.85' , 'ccccc' , 'ccccc@ubc.ca' , '001' , '0001' );
+values ( '503' , '7788889999' , 'ccccc' , 'ccccc@ubc.ca' , '001' , '0001' );
 
 insert into passenger_card1
-values ( '504' , '7789000000' , '20' , '10' , 'ddddd' , 'ddddd@ubc.ca' , '300' , '3000' );
+values ( '504' , '7789000000' , 'ddddd' , 'ddddd@ubc.ca' , '300' , '3000' );
 
 insert into passenger_card1
-values ( '505' , '7783334444' , '21' , '10' , 'eeeee' , 'eeeee@ubc.ca' , '002' , '0002' );
+values ( '505' , '7783334444' , 'eeeee' , 'eeeee@ubc.ca' , '002' , '0002' );
 
+insert into passenger_take_vehicle
+values ( '501', '26-FEB-20 8:00:00', '2.85', '10');
+
+insert into passenger_take_vehicle
+values('502','26-FEB-20 9:00:00', '2.85', '11');
+
+insert into passenger_take_vehicle
+values('503', '25-FEB-20 8:00:00', '2.85', '12');
+
+insert into passenger_take_vehicle
+values('504', '26-FEB-20 7:00:00', '10', '20');
+
+insert into passenger_take_vehicle
+values('505', '26-FEB-20 8:00:00', '10', '21');
+
+insert into passenger_take_vehicle
+values('502', '26-FEB-20 7:00:00', '2.85', '10');

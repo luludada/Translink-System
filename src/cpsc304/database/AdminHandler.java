@@ -85,7 +85,6 @@ public class AdminHandler extends DatabaseConnectionHandler{
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return result.toArray(new Driver[result.size()]);
     }
 
     public void getGoodpassenger() {
@@ -102,6 +101,5 @@ public class AdminHandler extends DatabaseConnectionHandler{
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return result.toArray(new Driver[result.size()]);
     }
 }
