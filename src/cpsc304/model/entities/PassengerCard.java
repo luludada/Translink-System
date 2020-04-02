@@ -2,6 +2,7 @@ package cpsc304.model.entities;
 
 public class PassengerCard {
     public int SIN;
+    public String cardNo; //Unique key
     public double fee;
     public int vehicle_id;
     public String phone;
@@ -9,8 +10,9 @@ public class PassengerCard {
     public String userID;
     public String email;
 
-    public PassengerCard(int SIN, double fee, int vehicle_id, String phone, String userID, String email) {
+    public PassengerCard(int SIN, String cardNo, double fee, int vehicle_id, String phone, String name, String userID, String email) {
         this.SIN = SIN;
+        this.cardNo = cardNo;
         this.fee = fee;
         this.vehicle_id = vehicle_id;
         this.phone = phone;
@@ -19,22 +21,19 @@ public class PassengerCard {
         this.email = email;
     }
 
+    public String getCardNo() {return  cardNo;}
+
     public double getFee() {return fee;}
 
-    public int getVehicle_id() { return vehicle_id;
-    }
+    public int getVehicle_id() { return vehicle_id; }
 
-    public int getSIN() {
-        return SIN;
-    }
+    public int getSIN() { return SIN; }
 
     public String getPhone() {
         return phone;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public String getUserID() {
         return userID;

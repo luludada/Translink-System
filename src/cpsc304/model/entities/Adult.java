@@ -1,13 +1,13 @@
 package cpsc304.model.entities;
 
 public class Adult {
-    public int cardNo;
+    public String cardNo;
 
-    public Adult(int cardNo) {
+    public Adult(String cardNo) {
         this.cardNo = cardNo;
     }
 
-    public int getCardNo() {
+    public String getCardNo() {
         return cardNo;
     }
 
