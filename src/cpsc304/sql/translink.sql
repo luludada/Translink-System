@@ -111,7 +111,7 @@ create table passenger_take_vehicle (
     fee number(10,2),
     vehicle_id integer,
     primary key (sin, tk_time, vehicle_id),
-    foreign key (sin) references passenger_card1,
+    foreign key (sin) references passenger_card1 on delete cascade,
     foreign key (vehicle_id) references vehicle_follow_drive1);
  
  
