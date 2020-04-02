@@ -1,5 +1,7 @@
 package cpsc304.database;
 
+import cpsc304.model.entities.PassengerCard;
+
 import java.sql.Connection;
 
 public class PassengerHandler {
@@ -11,6 +13,9 @@ public class PassengerHandler {
         this.connection = connection;
     }
 
+    public void insertPassenger(PassengerCard passengerCard) {
+
+    }
 
 
 
