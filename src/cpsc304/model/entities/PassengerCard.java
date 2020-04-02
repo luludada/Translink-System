@@ -1,0 +1,47 @@
+package cpsc304.model.entities;
+
+public class PassengerCard {
+    public int SIN;
+    public double fee;
+    public int vehicle_id;
+    public String phone;
+    public String name;
+    public String userID;
+    public String email;
+
+    public PassengerCard(int SIN, double fee, int vehicle_id, String phone, String userID, String email) {
+        this.SIN = SIN;
+        this.fee = fee;
+        this.vehicle_id = vehicle_id;
+        this.phone = phone;
+        this.name = name;
+        this.userID = userID;
+        this.email = email;
+    }
+
+    public double getFee() {return fee;}
+
+    public int getVehicle_id() { return vehicle_id;
+    }
+
+    public int getSIN() {
+        return SIN;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+}

@@ -1,9 +1,15 @@
 package cpsc304.model.entities;
 
 public class Adult {
-    public int CardNo;
+    public int cardNo;
 
-    public Adult(int CardNo) {
-        this.CardNo = CardNo;
+    public Adult(int cardNo) {
+        this.cardNo = cardNo;
     }
+
+    public int getCardNo() {
+        return cardNo;
+    }
+
+
 }
