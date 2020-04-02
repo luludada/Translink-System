@@ -51,7 +51,7 @@ public class PassengerHandler {
     //update operation on the cardBalance by joining PassengerCard and Card Table
     public void updatePassengerCardBalance(double newBalance) {
         try{
-            PreparedStatement ps = connection.prepareStatement("UPDATE card SET card.balance = ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE (SELECT BALANCE FROM CARD c natural join PASSENGER_CARD1 p) SET BALANCE = ?");
             ps.setDouble(1, newBalance);
             ps.executeUpdate();
             connection.commit();
