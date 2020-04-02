@@ -69,4 +69,22 @@ public class AdminHandler extends DatabaseConnectionHandler{
             super.rollbackConnection();
         }
     }
+
+    public void getFeesums() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select vehicle_follow_drive1.vehicle_id,sum(fee) as totalfee from "
+                    + "vehicle_follow_drive1,passenger_take_vehicle where "
+                    + "vehicle_follow_drive1.vehicle_id=passenger_take_vehicle.vehicle_id "
+                    + "group by vehicle_follow_drive1.vehicle_id");
+
+            while (rs.next()) {
+                System.out.println(rs.getString("vehicle_id"));
+                System.out.println(rs.getString("totalfee"));
+            };
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result.toArray(new Driver[result.size()]);
+    }
 }
