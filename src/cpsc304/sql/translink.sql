@@ -100,7 +100,7 @@ create table passenger_card1(
 	phone char(20),
 	user_id char(20) not null unique,
 	email char(20),
-	pin char(20),
+	pin integer,
 	card_num char(20) unique,
     foreign key (phone) references passenger_card2,
 	foreign key (card_num) references card);
