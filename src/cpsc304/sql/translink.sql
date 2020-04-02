@@ -432,3 +432,27 @@ values('505', '26-FEB-20 8:00:00', '10', '21');
 
 insert into passenger_take_vehicle
 values('502', '26-FEB-20 7:00:00', '2.85', '10');
+
+insert into passenger_take_vehicle
+values('502', '26-FEB-20 3:00:00', '2.85', '12');
+
+insert into passenger_take_vehicle
+values('502', '22-FEB-20 3:00:00', '2.85', '13');
+
+insert into passenger_take_vehicle
+values('502', '28-FEB-20 3:00:00', '2.85', '14');
+
+insert into passenger_take_vehicle
+values('502', '26-FEB-20 11:00:00', '2.85', '20');
+
+insert into passenger_take_vehicle
+values('502', '29-FEB-20 10:00:00', '2.85', '21');
+
+insert into passenger_take_vehicle
+values('502', '27-FEB-20 5:00:00', '2.85', '22');
+
+insert into passenger_take_vehicle
+values('502', '26-MAR-20 8:00:00', '2.85', '23');
+
+insert into passenger_take_vehicle
+values('502', '20-FEB-20 9:00:00', '2.85', '24');
