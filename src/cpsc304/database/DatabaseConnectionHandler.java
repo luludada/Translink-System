@@ -1,5 +1,7 @@
 package cpsc304.database;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.BufferedReader;
 
 
 /**
@@ -66,7 +70,7 @@ public class DatabaseConnectionHandler {
     }
 
 
-    private void rollbackConnection() {
+     void rollbackConnection() {
         try  {
             connection.rollback();
         } catch (SQLException e) {
@@ -74,7 +78,29 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    public void databaseSetup() {
 
+        try {
+            Statement stmt = connection.createStatement();
+            File insertScript = new File("src/cpsc304/sql/insert.sql");
+            BufferedReader br = new BufferedReader(new FileReader(insertScript));
+            String line;
+            while ((line=br.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    stmt.addBatch(line);
+                }
+            }
+            int[] updateCounts = stmt.executeBatch();
+            connection.commit();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+
+    }
     public PassengerHandler getPassengerHandler() {
         return passengerHandler;
     }
