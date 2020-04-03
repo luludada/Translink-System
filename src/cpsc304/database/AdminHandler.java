@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import cpsc304.model.entities.Driver;
+import cpsc304.model.entities.Vehicle;
+import cpsc304.model.entities.VehicleFee;
 
 public class AdminHandler extends DatabaseConnectionHandler{
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
@@ -38,39 +40,42 @@ public class AdminHandler extends DatabaseConnectionHandler{
                 Driver driver = new Driver(-1,
                         -1,
                         -1,
-                        Integer.parseInt(rs.getString("sin").trim()),
+                        rs.getInt("sin"),
                         rs.getString("phone"),
-                        rs.getString("name"),
+                        rs.getString("name").trim(),
                         rs.getString("license_id"));
                 result.add(driver);
                 System.out.println(driver.name);
-            };
+            }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result.toArray(new Driver[result.size()]);
     }
 
-    public void deletePassenger(int sin) {
+    public String deletePassenger(int sin) {
+        String msg = " ";
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM passenger_card1 WHERE sin = ?");
             ps.setInt(1, sin);
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Passenger " + sin + " does not exist!");
+                msg = WARNING_TAG + " Passenger " + sin + " does not exist!";
             }
 
             connection.commit();
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            msg = EXCEPTION_TAG + " " + e.getMessage();
             super.rollbackConnection();
         }
+        return msg;
     }
 
-    public void getFeesums() {
+    public VehicleFee[] getFeesums() {
+        ArrayList<VehicleFee> result = new ArrayList<VehicleFee>();
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select vehicle_follow_drive1.vehicle_id,sum(fee) as totalfee from "
@@ -79,15 +84,19 @@ public class AdminHandler extends DatabaseConnectionHandler{
                     + "group by vehicle_follow_drive1.vehicle_id");
 
             while (rs.next()) {
-                System.out.println(rs.getString("vehicle_id"));
-                System.out.println(rs.getString("totalfee"));
-            };
+                VehicleFee vh = new VehicleFee(rs.getInt("vehicle_id"), rs.getDouble("totalfee"));
+                result.add(vh);
+                //System.out.println(vh.vehicle_id);
+                //System.out.println(vh.fee);
+            }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        return result.toArray(new VehicleFee[result.size()]);
     }
 
-    public void getGoodpassenger() {
+    public String [] getGoodPassengers() {
+        ArrayList<String> result = new ArrayList<String>();
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select user_id from passenger_card1"
@@ -96,10 +105,12 @@ public class AdminHandler extends DatabaseConnectionHandler{
                     "except passenger_take_vehicle.vehicle_id=vehicle_follow_drive1.vehicle_id)");
 
             while (rs.next()) {
-                System.out.println(rs.getString("user_id"));
-            };
+                result.add(rs.getString("user_id"));
+                //System.out.println(rs.getString("user_id"));
+            }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        return result.toArray(new String[result.size()]);
     }
 }

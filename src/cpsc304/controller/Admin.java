@@ -5,6 +5,7 @@ import cpsc304.database.AdminHandler;
 import cpsc304.database.DatabaseConnectionHandler;
 import cpsc304.delegates.AdminWindowDelegate;
 import cpsc304.model.entities.Driver;
+import cpsc304.model.entities.VehicleFee;
 
 
 public class Admin implements AdminWindowDelegate {
@@ -21,5 +22,20 @@ public class Admin implements AdminWindowDelegate {
     public void getAllDrivers() {
         Driver[] drivers  = adminHandler.getAllDrivers();
         adminWindow.displayDriverList(drivers);
+    }
+
+    public void sumVehicleFee() {
+        VehicleFee[] vehicles  = adminHandler.getFeesums();
+        adminWindow.displayVehicleFee(vehicles);
+    }
+
+    public void deletePassenger(int sin) {
+        String msg = adminHandler.deletePassenger(sin);
+        adminWindow.displayDeleteResult(msg);
+    }
+
+    public void getGoodPassengers(){
+        String[] passengers = adminHandler.getGoodPassengers();
+        adminWindow.displayGoodPassengers(passengers);
     }
 }
