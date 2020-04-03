@@ -23,7 +23,7 @@ public class PassengerCard {
     }
 
     public String getCardNo() {return  cardNo;}
-    
+
     public int getVehicle_id() { return vehicle_id; }
 
     public int getPIN() {return  PIN;}
