@@ -16,6 +16,7 @@ public class DriverHandler {
     }
 
     public Driver getVehicleRoute(String name) {
+        //Driver driver = new Driver(0,0,0,0,null," ",null);
         Driver driver = null;
         try {
             Statement stmt = connection.createStatement();

@@ -18,7 +18,8 @@ public class Drive implements DriverWindowDelegate {
     }
 
     public Driver getVehicleRoute(String name) {
-        Driver driver  = driverHandler.getVehicleRoute(name);
+        Driver driver = driverHandler.getVehicleRoute(name);
+        if (driver==null) return null;
         driverWindow.displayTwoids(driver, name);
         return driver;
     }
