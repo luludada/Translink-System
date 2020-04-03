@@ -15,7 +15,8 @@ public class DriverHandler {
         this.connection = connection;
     }
 
-    public void getVehicleRoute(String name) {
+    public Driver getVehicleRoute(String name) {
+        Driver driver = null;
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select vehicle_follow_drive1.vehicle_id,vehicle_follow_drive1.route_id"
@@ -23,7 +24,7 @@ public class DriverHandler {
                     "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone and vehicle_follow_drive2.name='" + name + "'");
 
             while (rs.next()) {
-                Driver driver = new Driver(Integer.parseInt(rs.getString("vehicle_id").trim()),
+                driver = new Driver(Integer.parseInt(rs.getString("vehicle_id").trim()),
                         0,
                         Integer.parseInt(rs.getString("route_id").trim()),
                         0,
@@ -33,13 +34,15 @@ public class DriverHandler {
                 System.out.println(name);
                 System.out.println(driver.vehicle_id);
                 System.out.println(driver.route_id);
-            };
+            }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        return driver;
     }
 
-    public void getPassengernum(String name) {
+    public int getPassengernum(String name) {
+        int passengernum = 0;
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select count(*) as total_num"
@@ -48,13 +51,14 @@ public class DriverHandler {
                     + "'" + " and vehicle_follow_drive1.vehicle_id=passenger_take_vehicle.vehicle_id");
 
             while (rs.next()) {
-                int passengernum = Integer.parseInt(rs.getString("total_num").trim());
+                passengernum = Integer.parseInt(rs.getString("total_num").trim());
                 System.out.println(name);
                 System.out.println(passengernum);
-            };
+            }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        return passengernum;
     }
 
 }
