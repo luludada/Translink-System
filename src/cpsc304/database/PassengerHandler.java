@@ -1,10 +1,10 @@
 package cpsc304.database;
 
-import cpsc304.model.entities.Card;
-import cpsc304.model.entities.Driver;
 import cpsc304.model.entities.PassengerCard;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PassengerHandler {
 
@@ -65,6 +65,24 @@ public class PassengerHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
+    }
+
+    public boolean verifyUser(String id){
+        List<String> returnUserId = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("select COUNT(1) FROM PASSENGER_CARD1 WHERE USER_ID = ?") ;
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                returnUserId.add(rs.getString("user_id"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+        return !returnUserId.isEmpty();
     }
 
     //update operation on the cardBalance by joining PassengerCard and Card Table

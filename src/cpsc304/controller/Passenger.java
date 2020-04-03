@@ -20,6 +20,11 @@ public class Passenger implements PassengerDelegate {
         passengerHandler.insertPassengerCard(passengerCard);
     }
 
+    public boolean verifyPassenger(String id){
+        return passengerHandler.verifyUser(id);
+    }
+
+
     public void getPassengerCard() {
         passengerHandler.viewCardAccount();
     }
