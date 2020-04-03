@@ -81,7 +81,7 @@ public class AdminHandler extends DatabaseConnectionHandler{
             ResultSet rs = stmt.executeQuery("select vehicle_follow_drive1.vehicle_id,sum(fee) as totalfee from "
                     + "vehicle_follow_drive1,passenger_take_vehicle where "
                     + "vehicle_follow_drive1.vehicle_id=passenger_take_vehicle.vehicle_id "
-                    + "group by vehicle_follow_drive1.vehicle_id");
+                    + "group by vehicle_follow_drive1.vehicle_id" + " order by vehicle_follow_drive1.vehicle_id");
 
             while (rs.next()) {
                 VehicleFee vh = new VehicleFee(rs.getInt("vehicle_id"), rs.getDouble("totalfee"));
@@ -100,9 +100,9 @@ public class AdminHandler extends DatabaseConnectionHandler{
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select user_id from passenger_card1"
-                    + " where not exists (select vehicle_follow_drive1.vehicle_id from vehicle_follow_drive1,"+
-                    "passenger_take_vehicle where passenger_take_vehicle.sin=passenger_card1.sin "+
-                    "except passenger_take_vehicle.vehicle_id=vehicle_follow_drive1.vehicle_id)");
+                    + " where not exists ((select vehicle_follow_drive1.vehicle_id from vehicle_follow_drive1)"+
+                    " minus (select passenger_take_vehicle.vehicle_id from passenger_take_vehicle"+
+                    " where passenger_take_vehicle.sin=passenger_card1.sin))");
 
             while (rs.next()) {
                 result.add(rs.getString("user_id"));

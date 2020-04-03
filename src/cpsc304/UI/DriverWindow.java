@@ -18,6 +18,8 @@ public class DriverWindow extends JPanel{
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
+    private JTextField textField1;
+    private JTextField textField2;
     private DriverWindowDelegate delegate;
     private JFrame frame;
     private JScrollPane scrollPane;
@@ -36,26 +38,49 @@ public class DriverWindow extends JPanel{
     private void init() {
         JPanel panel = new JPanel(new GridBagLayout());
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
-        JButton button1 = new JButton("Get Alice's Vehicle id and Route id");
-        button1.addActionListener((e)->delegate.getVehicleRoute("Alice"));
-        buttonsPanel.add(button1);
-        buttonsPanel.add(new JLabel());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.add(new JLabel("name"), c);
+        c.gridy = 2;
+        panel.add(new JLabel("name"), c);
 
-        JButton button2 = new JButton("Get Alice's passenger number");
-        button2.addActionListener((e)->delegate.getPassengernum("Alice"));
-        buttonsPanel.add(button2);
-        buttonsPanel.add(new JLabel());
+        textField1 = new JTextField(15);
+        textField2 = new JTextField(15);
+        c.gridx = 1;
+        c.gridy = 1;
+        panel.add(textField1, c);
+        c.gridy = 2;
+        panel.add(textField2, c);
 
-        GridBagConstraints buttonsConstraint = new GridBagConstraints();
+
+        //JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
+        JButton button1 = new JButton("Get Vehicle id and Route id");
+        button1.addActionListener((e)->delegate.getVehicleRoute(textField1.getText()));
+        c.gridx = 2;
+        c.gridy = 1;
+        panel.add(button1, c);
+        //panel.add(new JLabel());
+
+        JButton button2 = new JButton("Get passenger number");
+        button2.addActionListener((e)->delegate.getPassengernum(textField2.getText()));
+        c.gridy = 2;
+        panel.add(button2, c);
+        //buttonsPanel.add(new JLabel());
+
+        /*GridBagConstraints buttonsConstraint = new GridBagConstraints();
         buttonsConstraint.gridx = 0;
         buttonsConstraint.gridy = 1;
-        panel.add(buttonsPanel, buttonsConstraint);
+        panel.add(buttonsPanel, buttonsConstraint);*/
 
-        scrollPane = new JScrollPane();
+        JTextArea textArea = new JTextArea(5, 20);
+        textArea.setEditable(false);
+        scrollPane = new JScrollPane(textArea);
         GridBagConstraints scrollConstraint = new GridBagConstraints();
-        scrollConstraint.gridx = 1;
-        scrollConstraint.gridy = 1;
+        scrollConstraint.fill = GridBagConstraints.BOTH;
+        scrollConstraint.gridwidth = GridBagConstraints.REMAINDER;
+        scrollConstraint.gridx = 0;
+        scrollConstraint.gridy= 3;
         panel.add(scrollPane, scrollConstraint);
 
 

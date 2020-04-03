@@ -18,15 +18,15 @@ public class Drive implements DriverWindowDelegate {
     }
 
     public Driver getVehicleRoute(String name) {
-        Driver driver  = driverHandler.getVehicleRoute("Alice");
+        Driver driver  = driverHandler.getVehicleRoute(name);
         driverWindow.displayTwoids(driver, name);
         return driver;
     }
 
     public int getPassengernum(String name) {
-        int num = driverHandler.getPassengernum("Alice");
+        int num = driverHandler.getPassengernum(name);
         System.out.println(num);
-        driverWindow.displayPnum("Alice", num);
+        driverWindow.displayPnum(name, num);
         return num;
     }
 }
