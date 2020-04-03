@@ -5,11 +5,16 @@ import cpsc304.delegates.PassengerDelegate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PassengerWindow extends JPanel {
+public class PassengerWindow extends JPanel implements ActionListener {
+
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
+    JTextField user_id;
+
 
     private PassengerDelegate delegate;
     private JFrame frame;
@@ -28,6 +33,18 @@ public class PassengerWindow extends JPanel {
 
     private void init() {
         JPanel panel = new JPanel(new GridBagLayout());
+
+
+        user_id = new JTextField(30);
+        JLabel welcome = new JLabel("Please enter your user_id", JLabel.CENTER);
+        add(welcome);
+        user_id.setBounds(200,150, 200,30);
+        add(user_id);
+
+        JButton enter = new JButton("Enter");
+        add(enter);
+        enter.setActionCommand("Enter");
+        enter.addActionListener(this);
 
         JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
         JButton button1 = new JButton("View Your Account");
@@ -51,8 +68,14 @@ public class PassengerWindow extends JPanel {
         scrollConstraint.gridy = 1;
         panel.add(scrollPane, scrollConstraint);
 
-
         add(panel);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Enter")) {
+            String id = user_id.getText();
+
+        }
+    }
 }
