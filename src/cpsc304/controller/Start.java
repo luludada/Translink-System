@@ -11,6 +11,6 @@ public class Start{
 
     public void start() {
         startWindow = new StartWindow();
-        startWindow.launch();
+
     }
 }
