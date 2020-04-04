@@ -31,7 +31,7 @@ public class AdminWindow extends JPanel{
         this.delegate = delegate;
 
         frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         this.init();
         frame.add(this);
@@ -114,7 +114,7 @@ public class AdminWindow extends JPanel{
         try {
             textInput = Integer.valueOf(textField.getText());
         } catch (Exception e) {
-            String msg = "Please enter a valid SIN";
+            textInput = -1;
         }
         delegate.deletePassenger(textInput);
 

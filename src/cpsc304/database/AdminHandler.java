@@ -61,7 +61,7 @@ public class AdminHandler extends DatabaseConnectionHandler{
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                msg = WARNING_TAG + " Passenger " + sin + " does not exist!";
+                msg = WARNING_TAG + " Passenger " + sin + " does not exist! Please enter a valid SIN! ";
             }
 
             connection.commit();
