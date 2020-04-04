@@ -5,7 +5,7 @@ import cpsc304.model.entities.PassengerCard;
 
 public interface PassengerDelegate {
     void insertPassengerCard(PassengerCard passengerCard);
-    void getPassengerCard();
-    boolean verifyPassenger(String id);
+    PassengerCard getPassengerCard(String user_id);
+    boolean verifyPassenger(String user_id);
     void updateBalance(double value);
 }

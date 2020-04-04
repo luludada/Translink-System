@@ -1,5 +1,6 @@
 package cpsc304.database;
 
+import cpsc304.controller.Passenger;
 import cpsc304.model.entities.PassengerCard;
 
 import java.sql.*;
@@ -42,36 +43,39 @@ public class PassengerHandler {
     }
 
     //project operation on the cardBalance by joining PassengerCard and Card Table
-    public void viewCardAccount() {
+    public PassengerCard getCardAccount(String user_id) {
+        ArrayList<PassengerCard> result = new ArrayList<PassengerCard>();
+
         try{
-            String query = "select sin, PASSENGER_CARD1.phone, user_id, email, pin, name, PASSENGER_CARD1.card_num, balance from PASSENGER_CARD1, PASSENGER_CARD2, CARD";
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            String query = "SELECT sin, PASSENGER_CARD1.phone, user_id, email, pin, name, PASSENGER_CARD1.card_num, balance from PASSENGER_CARD1, PASSENGER_CARD2, CARD WHERE USER_ID = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, user_id);
+            ResultSet rs = ps.executeQuery(query);
             while (rs.next()) {
-                System.out.println("------------------------------------------------");
-                System.out.println("SIN: " + rs.getInt("sin"));
-                System.out.println("phone: " + rs.getString("phone"));
-                System.out.println("user_id: " + rs.getString("user_id"));
-                System.out.println("email: " + rs.getString("email"));
-                System.out.println("pin: " + rs.getInt("pin"));
-                System.out.println("name: " + rs.getString("name"));
-                System.out.println("card_num: " + rs.getString("card_num"));
-                System.out.println("balance: " + rs.getDouble("balance"));
-                System.out.println("------------------------------------------------");
+                PassengerCard cardDetail = new PassengerCard( rs.getInt("sin"),
+                rs.getString("phone"),
+                rs.getString("user_id"),
+                rs.getString("email"),
+                rs.getInt("pin"),
+                rs.getString("name"),
+                rs.getString("card_num"),
+                rs.getDouble("balance"));
+                result.add(cardDetail);
             }
             rs.close();
-            stmt.close();
+            ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            e.printStackTrace();
             rollbackConnection();
         }
+        return result.isEmpty() ? null : result.get(0);
     }
 
-    public boolean verifyUser(String id){
+    public boolean verifyUser(String user_id){
         List<String> returnUserId = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("select COUNT(1) FROM PASSENGER_CARD1 WHERE USER_ID = ?") ;
-            ps.setString(1, id);
+            ps.setString(1, user_id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 returnUserId.add(rs.getString("user_id"));

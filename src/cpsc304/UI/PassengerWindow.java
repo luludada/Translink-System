@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class PassengerWindow extends JPanel implements ActionListener {
 
 
@@ -47,15 +48,6 @@ public class PassengerWindow extends JPanel implements ActionListener {
         enter.addActionListener(this);
 
         JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
-        JButton button1 = new JButton("View Your Account");
-        button1.addActionListener((e)->delegate.getPassengerCard());
-        buttonsPanel.add(button1);
-        buttonsPanel.add(new JLabel());
-
-        JButton button2 = new JButton("Add Money to Account");
-        button2.addActionListener((e)->delegate.updateBalance(1));
-        buttonsPanel.add(button2);
-        buttonsPanel.add(new JLabel());
 
         GridBagConstraints buttonsConstraint = new GridBagConstraints();
         buttonsConstraint.gridx = 0;
@@ -75,7 +67,13 @@ public class PassengerWindow extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Enter")) {
             String id = user_id.getText();
-
+            Boolean isVerified = delegate.verifyPassenger(id);
+            if(isVerified) {
+                //this.dispose();
+                new CardAccountWindow(id);
+            } else {
+                JOptionPane.showMessageDialog(null,"Invalid user id");
+            }
         }
     }
 }

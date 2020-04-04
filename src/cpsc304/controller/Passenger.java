@@ -1,6 +1,5 @@
 package cpsc304.controller;
 
-import cpsc304.UI.DriverWindow;
 import cpsc304.UI.PassengerWindow;
 import cpsc304.database.PassengerHandler;
 import cpsc304.delegates.PassengerDelegate;
@@ -20,14 +19,14 @@ public class Passenger implements PassengerDelegate {
         passengerHandler.insertPassengerCard(passengerCard);
     }
 
-    public boolean verifyPassenger(String id){
-        return passengerHandler.verifyUser(id);
+    public PassengerCard getPassengerCard(String user_id) {
+        passengerHandler.getCardAccount(user_id);
     }
 
-
-    public void getPassengerCard() {
-        passengerHandler.viewCardAccount();
+    public boolean verifyPassenger(String user_id){
+        return passengerHandler.verifyUser(user_id);
     }
+
 
     public void updateBalance(double value) {
         passengerHandler.updatePassengerCardBalance(value);
