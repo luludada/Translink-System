@@ -18,10 +18,11 @@ public class Drive implements DriverWindowDelegate {
     }
 
     public Driver getVehicleRoute(String name) {
-        Driver driver = driverHandler.getVehicleRoute(name);
+        Driver[] driver = driverHandler.getVehicleRoute(name);
+        Driver d = new Driver(0,0,0,0,null,null,null);
         if (driver==null) return null;
         driverWindow.displayTwoids(driver, name);
-        return driver;
+        return d;
     }
 
     public int getPassengernum(String name) {

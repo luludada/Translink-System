@@ -90,11 +90,12 @@ public class DriverWindow extends JPanel{
         add(panel);
     }
 
-    public void displayTwoids(Driver driver, String name) {
-        ArrayList <String> strList = new ArrayList<>(1);
-        strList.add(name+" vehicle id: "+driver.vehicle_id+" route id: "+driver.route_id);
+    public void displayTwoids(Driver[] driver, String name) {
+        ArrayList<String> strList = new ArrayList<>(driver.length);
+        for (int i = 0; i < driver.length; i++) {
+            strList.add(" vehicle id: " + driver[i].vehicle_id + " route id: " + driver[i].route_id);
+        }
         final JList<String> list = new JList<String>(strList.toArray(new String[strList.size()]));
-
         scrollPane.setViewportView(list);
         list.setLayoutOrientation(JList.VERTICAL);
         scrollPane.doLayout();

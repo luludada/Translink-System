@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DriverHandler {
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
@@ -15,31 +16,33 @@ public class DriverHandler {
         this.connection = connection;
     }
 
-    public Driver getVehicleRoute(String name) {
+    public Driver[] getVehicleRoute(String name) {
         //Driver driver = new Driver(0,0,0,0,null," ",null);
-        Driver driver = null;
+        //Driver driver = new Driver(-1,-1,-1,-1,null," ", null);
+        ArrayList<Driver> driver = new ArrayList<Driver>();
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select vehicle_follow_drive1.vehicle_id,vehicle_follow_drive1.route_id"
+            ResultSet rs = stmt.executeQuery("select distinct vehicle_follow_drive1.vehicle_id,vehicle_follow_drive1.route_id"
                     + " from vehicle_follow_drive1,vehicle_follow_drive2 where " +
                     "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone and " + name);
 
             while (rs.next()) {
-                driver = new Driver(Integer.parseInt(rs.getString("vehicle_id").trim()),
+                Driver d = new Driver(Integer.parseInt(rs.getString("vehicle_id").trim()),
                         0,
                         Integer.parseInt(rs.getString("route_id").trim()),
                         0,
                         null,
                         name,
                         null);
+                driver.add(d);
                 System.out.println(name);
-                System.out.println(driver.vehicle_id);
-                System.out.println(driver.route_id);
+                System.out.println(d.vehicle_id);
+                System.out.println(d.route_id);
             }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return driver;
+        return driver.toArray(new Driver[driver.size()]);
     }
 
     public int getPassengernum(String name) {
