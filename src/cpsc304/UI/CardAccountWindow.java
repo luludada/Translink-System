@@ -25,8 +25,8 @@ public class CardAccountWindow extends JFrame implements ActionListener {
     public CardAccountWindow(String user_id){
 
 
-        Object[] headers = {"SIN", "Phone", "User ID", "Email", "PIN", "Name", "Card Num", "Balance"};
-        accountTable = new JTable(new DefaultTableModel(headers, 0) {
+        String[] columnNames = {"SIN", "Phone", "User ID", "Email", "PIN", "Name", "Card Num", "Balance"};
+        accountTable = new JTable(new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -35,10 +35,8 @@ public class CardAccountWindow extends JFrame implements ActionListener {
 
         DefaultTableModel model = (DefaultTableModel) accountTable.getModel();
 
-        for (PassengerCard passengerCard : card.getPassengerCards()) {
-            model.addRow(
-                    new Object[] {passengerCard.getCardNo(), passengerCard.getName(), passengerCard.getUserID(), passengerCard.getEmail(), passengerCard.getPhone(), passengerCard.getPIN(), passengerCard.getSIN()});
-        }
+
+
 
        //display account detail
        //Create a table with associated column using the get function

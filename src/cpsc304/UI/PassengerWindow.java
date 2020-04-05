@@ -20,6 +20,8 @@ public class PassengerWindow extends JPanel implements ActionListener {
     private JFrame frame;
     private JScrollPane scrollPane;
 
+
+
     public void launch(PassengerDelegate delegate) {
         this.delegate = delegate;
 
@@ -45,33 +47,30 @@ public class PassengerWindow extends JPanel implements ActionListener {
         enter.setActionCommand("Enter");
         enter.addActionListener(this);
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
+        JButton newPassenger = new JButton("New Passenger?");
+        add(newPassenger);
+        newPassenger.setActionCommand("New");
+        newPassenger.addActionListener(this);
 
-        GridBagConstraints buttonsConstraint = new GridBagConstraints();
-        buttonsConstraint.gridx = 0;
-        buttonsConstraint.gridy = 1;
-        panel.add(buttonsPanel, buttonsConstraint);
-
-        scrollPane = new JScrollPane();
-        GridBagConstraints scrollConstraint = new GridBagConstraints();
-        scrollConstraint.gridx = 1;
-        scrollConstraint.gridy = 1;
-        panel.add(scrollPane, scrollConstraint);
 
         add(panel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("New")) {
+            new newPassengerCard();
+        }
         if (e.getActionCommand().equals("Enter")) {
             String id = user_id.getText();
             Boolean isVerified = delegate.verifyPassenger(id);
-            if(isVerified) {
+            if (isVerified) {
                 frame.dispose();
                 new CardAccountWindow(id);
             } else {
-                JOptionPane.showMessageDialog(null,"Invalid user id");
+                JOptionPane.showMessageDialog(null, "Invalid user id");
             }
         }
     }
+
 }

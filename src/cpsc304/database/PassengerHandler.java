@@ -6,6 +6,7 @@ import cpsc304.model.entities.PassengerCard;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 public class PassengerHandler {
@@ -18,24 +19,30 @@ public class PassengerHandler {
         this.connection = connection;
     }
 
-    public void insertPassengerCard(PassengerCard passengerCard) {
+    public void insertPassengerCard(int sin, String userID, String phone, String name, String email, String cardNo, int pin) {
         try{
             PreparedStatement ps = connection.prepareStatement("INSERT INTO passenger_card1 VALUES (?,?,?,?,?,?)");
-            ps.setInt(1, passengerCard.getSIN());
-            ps.setString(2, passengerCard.getPhone());
-            ps.setString(3, passengerCard.getUserID());
-            ps.setString(4, passengerCard.getEmail());
-            ps.setInt(5, passengerCard.getPIN());
-            ps.setString(6, passengerCard.getCardNo());
+            ps.setInt(1, sin);
+            ps.setString(2, phone);
+            ps.setString(3, userID);
+            ps.setString(4, email);
+            ps.setInt(5, pin);
+            ps.setString(6, cardNo);
             ps.executeUpdate();
             connection.commit();
             ps.close();
             PreparedStatement ps1 = connection.prepareStatement("INSERT INTO passenger_card2 VALUES (?,?)");
-            ps1.setString(1, passengerCard.getPhone());
-            ps1.setString(2, passengerCard.getName());
+            ps1.setString(1, phone);
+            ps1.setString(2, name);
             ps1.executeUpdate();
             connection.commit();
             ps1.close();
+            PreparedStatement ps2 = connection.prepareStatement("INSERT INTO card VALUES (?,?, ?)");
+            ps2.setString(1, cardNo);
+            ps2.setDouble(2, 0);
+            Random random = new Random();
+            int cvn = random.nextInt(999);
+            ps2.setInt(3, cvn);
             System.out.println("SUCCESS!");
         } catch(SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());

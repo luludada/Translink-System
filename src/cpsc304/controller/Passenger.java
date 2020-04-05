@@ -15,10 +15,6 @@ public class Passenger implements PassengerDelegate {
         passengerWindow.launch(this);
     }
 
-    public void insertPassengerCard(PassengerCard passengerCard){
-        passengerHandler.insertPassengerCard(passengerCard);
-    }
-
     public PassengerCard getPassengerCard(String user_id) {
         return passengerHandler.getCardAccount(user_id);
 
@@ -31,5 +27,9 @@ public class Passenger implements PassengerDelegate {
 
     public void updateBalance(double value) {
         passengerHandler.updatePassengerCardBalance(value);
+    }
+
+    public void insertPassengerCard(int sin, String userID, String phone, String name, String email, String cardNo, int pin) {
+        passengerHandler.insertPassengerCard(sin, userID, phone, name, email, cardNo, pin);
     }
 }
