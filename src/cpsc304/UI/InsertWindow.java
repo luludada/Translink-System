@@ -1,6 +1,7 @@
 package cpsc304.UI;
 
 import cpsc304.database.DatabaseConnectionHandler;
+import cpsc304.model.entities.PassengerCard1;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -79,6 +80,7 @@ public class InsertWindow extends JFrame implements ActionListener {
 
 
 
+        JButton backBtn = new JButton("Back");
 
 
 
@@ -95,12 +97,13 @@ public class InsertWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String option = e.getActionCommand();
         switch(option){
+            case "insert Passenger":
+//                PassengerCard1 p1 = new PassengerCard1();
+
             case "show Passenger":
                 tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger");
                 break;
         }
-
-
 
     }
 }

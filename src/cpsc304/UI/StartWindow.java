@@ -74,6 +74,7 @@ public class StartWindow extends JPanel {
         c.gridy = 3;
         panel.add(button3, c);
 
+
         /*GridBagConstraints buttonsConstraint = new GridBagConstraints();
         buttonsConstraint.gridx = 0;
         buttonsConstraint.gridy = 1;

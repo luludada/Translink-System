@@ -61,16 +61,16 @@ public class PassengerWindow extends JPanel implements ActionListener {
         if(e.getActionCommand().equals("New")) {
             new newPassengerCard();
         }
-        if (e.getActionCommand().equals("Enter")) {
-            String id = user_id.getText();
-            Boolean isVerified = delegate.verifyPassenger(id);
-            if (isVerified) {
-                frame.dispose();
-                new CardAccountWindow(id);
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid user id");
-            }
-        }
+//        if (e.getActionCommand().equals("Enter")) {
+//            String id = user_id.getText();
+//            Boolean isVerified = delegate.verifyPassenger(id);
+//            if (isVerified) {
+//                frame.dispose();
+//                new CardAccountWindow(id);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Invalid user id");
+//            }
+//        }
     }
 
 }

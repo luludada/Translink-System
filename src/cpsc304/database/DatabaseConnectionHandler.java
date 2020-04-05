@@ -111,7 +111,7 @@ public class DatabaseConnectionHandler {
 
 
     /* Delete operation in database */
-    public void deletePassengerCard(String user_id, Connection connection) {
+    public void deletePassengerCard(String user_id) {
         passengerHandler.deletePassengerCard(user_id, connection);
     }
 
