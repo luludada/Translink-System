@@ -1,6 +1,5 @@
 package cpsc304.UI;
 
-import cpsc304.delegates.AdminWindowDelegate;
 import cpsc304.delegates.PassengerDelegate;
 
 import javax.swing.*;
@@ -35,7 +34,6 @@ public class PassengerWindow extends JPanel implements ActionListener {
     private void init() {
         JPanel panel = new JPanel(new GridBagLayout());
 
-
         user_id = new JTextField(30);
         JLabel welcome = new JLabel("Please enter your user_id", JLabel.CENTER);
         add(welcome);
@@ -69,7 +67,7 @@ public class PassengerWindow extends JPanel implements ActionListener {
             String id = user_id.getText();
             Boolean isVerified = delegate.verifyPassenger(id);
             if(isVerified) {
-                //this.dispose();
+                frame.dispose();
                 new CardAccountWindow(id);
             } else {
                 JOptionPane.showMessageDialog(null,"Invalid user id");

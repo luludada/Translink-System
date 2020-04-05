@@ -1,25 +1,47 @@
 package cpsc304.UI;
 
+import cpsc304.controller.Passenger;
 import cpsc304.delegates.PassengerDelegate;
+import cpsc304.model.entities.PassengerCard;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
 
 public class CardAccountWindow extends JFrame implements ActionListener {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private PassengerDelegate delegate;
+    private PassengerCard card;
     JTextField value;
     private JFrame frame;
-    private JScrollPane scrollPane;
+    private JTable accountTable;
 
     public CardAccountWindow(String user_id){
 
-        //display account detail
-        //Create a table with associated column using the get function
+
+        Object[] headers = {"SIN", "Phone", "User ID", "Email", "PIN", "Name", "Card Num", "Balance"};
+        accountTable = new JTable(new DefaultTableModel(headers, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
+        DefaultTableModel model = (DefaultTableModel) accountTable.getModel();
+
+        for (PassengerCard passengerCard : card.getPassengerCards()) {
+            model.addRow(
+                    new Object[] {passengerCard.getCardNo(), passengerCard.getName(), passengerCard.getUserID(), passengerCard.getEmail(), passengerCard.getPhone(), passengerCard.getPIN(), passengerCard.getSIN()});
+        }
+
+       //display account detail
+       //Create a table with associated column using the get function
 
         JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
 

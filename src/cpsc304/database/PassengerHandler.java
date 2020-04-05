@@ -6,6 +6,7 @@ import cpsc304.model.entities.PassengerCard;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class PassengerHandler {
 
@@ -42,33 +43,63 @@ public class PassengerHandler {
         }
     }
 
-    //project operation on the cardBalance by joining PassengerCard and Card Table
+    //project operation on the account detail by joining PassengerCard and Card Table
     public PassengerCard getCardAccount(String user_id) {
+        Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
         ArrayList<PassengerCard> result = new ArrayList<PassengerCard>();
 
         try{
             String query = "SELECT sin, PASSENGER_CARD1.phone, user_id, email, pin, name, PASSENGER_CARD1.card_num, balance from PASSENGER_CARD1, PASSENGER_CARD2, CARD WHERE USER_ID = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, user_id);
+            ps.setFetchSize(1);
             ResultSet rs = ps.executeQuery(query);
-            while (rs.next()) {
-                PassengerCard cardDetail = new PassengerCard( rs.getInt("sin"),
-                rs.getString("phone"),
-                rs.getString("user_id"),
-                rs.getString("email"),
-                rs.getInt("pin"),
-                rs.getString("name"),
-                rs.getString("card_num"),
-                rs.getDouble("balance"));
-                result.add(cardDetail);
+            ResultSetMetaData md = rs.getMetaData();
+            int columns = md.getColumnCount();
+
+            //  Get column names
+
+            for (int i = 1; i <= columns; i++)
+            {
+                columnNames.addElement( md.getColumnName(i) );
             }
+
+            //  Get row data
+
+            while (rs.next())
+            {
+                Vector<Object> row = new Vector<Object>(columns);
+
+                for (int i = 1; i <= columns; i++)
+                {
+                    row.addElement( rs.getObject(i) );
+                }
+
+                data.addElement( row );
+            }
+
             rs.close();
             ps.close();
+            connection.close();
+//            while (rs.next()) {
+//                PassengerCard cardDetail = new PassengerCard( rs.getInt("sin"),
+//                rs.getString("phone"),
+//                rs.getString("user_id"),
+//                rs.getString("email"),
+//                rs.getInt("pin"),
+//                rs.getString("name"),
+//                rs.getString("card_num"),
+//                rs.getDouble("balance"));
+//                result.add(cardDetail);
+//            }
+//            rs.close();
+//            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
             rollbackConnection();
         }
-        return result.isEmpty() ? null : result.get(0);
+        return result.get(0);
     }
 
     public boolean verifyUser(String user_id){

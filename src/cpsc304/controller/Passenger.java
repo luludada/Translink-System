@@ -20,7 +20,8 @@ public class Passenger implements PassengerDelegate {
     }
 
     public PassengerCard getPassengerCard(String user_id) {
-        passengerHandler.getCardAccount(user_id);
+        return passengerHandler.getCardAccount(user_id);
+
     }
 
     public boolean verifyPassenger(String user_id){

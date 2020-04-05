@@ -15,8 +15,9 @@ public class newPassengerCard extends JFrame implements ActionListener {
     private PassengerDelegate delegate;
     private JFrame frame;
     private JScrollPane scrollPane;
+    private JButton submit;
+    private JButton backToDatabase;
 
-    JTextField textField;
     JTextField SIN;
     JTextField card_num;
     JTextField PIN;
@@ -26,6 +27,8 @@ public class newPassengerCard extends JFrame implements ActionListener {
     JTextField email;
 
     public newPassengerCard() {
+
+        super("Insert new passenger Information");
         JPanel panel = new JPanel(new GridBagLayout());
         JPanel inputPanel = new JPanel(new GridBagLayout());
         SIN = new JTextField(10);
@@ -42,6 +45,11 @@ public class newPassengerCard extends JFrame implements ActionListener {
         add(name);
         email = new JTextField(10);
         add(email);
+
+
+
+        submit = new JButton("Submit");
+        backToDatabase = new JButton("Back");
 
     }
 
