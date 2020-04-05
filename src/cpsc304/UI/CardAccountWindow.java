@@ -1,23 +1,20 @@
 package cpsc304.UI;
 
-import cpsc304.controller.Passenger;
 import cpsc304.delegates.PassengerDelegate;
-import cpsc304.model.entities.PassengerCard;
+import cpsc304.model.entities.PassengerCard1;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSetMetaData;
-import java.util.Vector;
 
 public class CardAccountWindow extends JFrame implements ActionListener {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private PassengerDelegate delegate;
-    private PassengerCard card;
+    private PassengerCard1 card;
     JTextField value;
     private JFrame frame;
     private JTable accountTable;
@@ -46,7 +43,7 @@ public class CardAccountWindow extends JFrame implements ActionListener {
         value = new JTextField(30);
         double amount = Double.parseDouble(value.getText());
         JButton button = new JButton("Add Money to Your Account");
-        button.addActionListener((e)->delegate.updateBalance(amount));
+        //button.addActionListener((e)->delegate.updateBalance(amount));
         buttonsPanel.add(button);
         value.setBounds(200,150, 200,30);
         add(value);

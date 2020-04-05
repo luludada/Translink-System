@@ -1,5 +1,10 @@
 package cpsc304.database;
 
+import cpsc304.controller.Passenger;
+import cpsc304.model.entities.Card;
+import cpsc304.model.entities.PassengerCard1;
+import cpsc304.model.entities.PassengerCard2;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.BufferedReader;
+import java.util.Vector;
 
 
 /**
@@ -58,9 +64,9 @@ public class DatabaseConnectionHandler {
             }
             connection = DriverManager.getConnection(ORACLE_URL, username, password);
             connection.setAutoCommit(false);
-            passengerHandler = new PassengerHandler(connection);
-            adminHandler = new AdminHandler(connection);
-            driverHandler = new DriverHandler(connection);
+//            passengerHandler = new PassengerHandler(connection);
+//            adminHandler = new AdminHandler(connection);
+//            driverHandler = new DriverHandler(connection);
             System.out.println("\nConnected to Oracle!");
             return true;
         } catch (SQLException e) {
@@ -101,6 +107,56 @@ public class DatabaseConnectionHandler {
 
 
     }
+
+    /* Insert operation in database */
+    public void insertPassengerCard(PassengerCard1 p1, PassengerCard2 p2, Card card, Connection connection) {
+        PassengerHandler.insertPassengerCard(p1, p2, card, connection);
+    }
+
+
+    /* Delete operation in database */
+    public void deletePassengerCard(String user_id, Connection connection) {
+        passengerHandler.deletePassengerCard(user_id, connection);
+    }
+
+
+
+    /* Update operation in database */
+    public void updatePassengerStr(String attribute, String user_id, Connection connection) {
+        PassengerHandler.updatePassengerStr(attribute, user_id, connection);
+    }
+
+    public void updatePassengerCardInt(int attribute, String user_id, Connection connection) {
+        PassengerHandler.updatePassengerCardInt(attribute, user_id, connection);
+    }
+
+    public void updatePassengerCardBalance(double value, String user_id, Connection connection) {
+        PassengerHandler.updatePassengerCardBalance(value, user_id, connection);
+    }
+
+
+    /* Select all operation in one table in database */
+    public  Vector<Vector<Object>>  getAllPassenger(Connection connection) {
+        return PassengerHandler.getAllPassenger(connection);
+    }
+
+
+    /*Projection operation in one table */
+
+
+    /*Join operation */
+
+
+    /*Aggregation query  */
+
+
+
+    /*Nested aggregation with group-by */
+
+
+    /*Division operation */
+
+
     public PassengerHandler getPassengerHandler() {
         return passengerHandler;
     }

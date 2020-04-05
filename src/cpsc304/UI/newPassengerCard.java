@@ -64,8 +64,10 @@ public class newPassengerCard extends JFrame implements ActionListener {
 
         submit = new JButton("Submit");
         submit.setBounds(260,320, 100,30);
+        submit.addActionListener(this);
         add(submit);
         back = new JButton("Back");
+        back.addActionListener(this);
         back.setBounds(410,320, 100,30);
         add(back);
 
@@ -80,7 +82,7 @@ public class newPassengerCard extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submit) {
+        if (e.getActionCommand().equals("Submit")) {
             int sin = Integer.parseInt(SIN.getText());
             String userID = user_id.getText();
             String phone = Phone.getText();
@@ -89,14 +91,12 @@ public class newPassengerCard extends JFrame implements ActionListener {
             Random random = new Random();
             String cardNo = String.format("%04d", random.nextInt(10000));
             int pin = random.nextInt(999);
-            delegate.insertPassengerCard(sin, userID, phone, name, email, cardNo, pin);
+            //delegate.insertPassengerCard(sin, userID, phone, name, email, cardNo, pin);
+            JOptionPane.showMessageDialog(null, "Add successfully, and Your cardNo is" + cardNo);
             dispose();
-            Passenger passenger = new Passenger();
-            passenger.start();
-        } else if (e.getSource() == back) {
-            frame.dispose();
-            Passenger passenger = new Passenger();
-            passenger.start();
+        }
+        if (e.getActionCommand().equals("Back")) {
+            dispose();
         }
     }
 }

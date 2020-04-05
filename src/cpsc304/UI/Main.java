@@ -2,7 +2,6 @@ package cpsc304.UI;
 
 import cpsc304.controller.*;
 import cpsc304.database.DatabaseConnectionHandler;
-import cpsc304.model.entities.PassengerCard;
 
 public class Main{
 
