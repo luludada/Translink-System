@@ -30,8 +30,9 @@ public class PassengerHandler {
             ps1.setString(2, p1.getPhone());
             ps1.setString(3, p1.getUserID());
             ps1.setString(4, p1.getEmail());
-            ps1.setInt(5, pin);
-            ps1.setString(6, cardNo);
+            ps1.setInt(5, p1.getAge());
+            ps1.setInt(6, pin);
+            ps1.setString(7, cardNo);
 
             ps1.executeUpdate();
             connection.commit();
@@ -41,7 +42,6 @@ public class PassengerHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 
             rollbackConnection(connection);
-            return;
         }
         try {
             PreparedStatement ps2 = connection.prepareStatement("INSERT INTO PASSENGER_CARD2 VALUES (?,?)");
@@ -55,7 +55,6 @@ public class PassengerHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection(connection);
-            return;
         }
 
         try {
@@ -69,14 +68,13 @@ public class PassengerHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection(connection);
         }
-        return;
     }
 
 
     //Delete
     public void deletePassengerCard(String user_id, Connection connection) {
         try {
-            String delete = "delete from PASSENGER_CARD1 where USER_ID = \'" + user_id + "\'";
+            String delete = "delete from PASSENGER_CARD1 where USER_ID = " + user_id ;
             PreparedStatement ps = connection.prepareStatement(delete);
 
             int rowCount = ps.executeUpdate();
@@ -137,9 +135,11 @@ public class PassengerHandler {
     //update operation on the cardBalance by joining PassengerCard and Card Table
     public static void updatePassengerCardBalance(double value, String user_id, Connection connection) {
         try{
-            PreparedStatement ps = connection.prepareStatement("UPDATE (SELECT BALANCE FROM CARD c natural join PASSENGER_CARD1 p WHERE p.USER_ID = ?) SET BALANCE = BALANCE + ?");
-            ps.setString(1, user_id);
-            ps.setDouble(2, value);
+            PreparedStatement ps = connection.prepareStatement("UPDATE CARD " +
+                    "SET BALANCE = BALANCE + ? " +
+                    "WHERE CARD.CARD_NUM = (SELECT p.card_num FROM PASSENGER_CARD1 p where p.USER_ID = ?)");
+            ps.setDouble(1, value);
+            ps.setString(2, user_id);
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
                 System.out.println(WARNING_TAG + " does not exist!");
@@ -153,24 +153,23 @@ public class PassengerHandler {
 
 
     //Select All query
-    public static Vector<Vector<Object>>  getAllPassenger(Connection connection) {
+    public static Vector<Vector<String>>  getAllPassenger(Connection connection) {
 
-        Vector<Vector<Object>> Passengers = new Vector<>();
+        Vector<Vector<String>> Passengers = new Vector<>();
 
         try {
-            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.PHONE AS Phone" +
-                    " from PASSENGER_CARD1 P1, PASSENGER_CARD2 P2 " +
-                    "where P1.PHONE = P2.PHONE " +
-                    "order by Name";
+            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.PHONE AS Phone, C.Balance AS Balance" +
+                    " from PASSENGER_CARD1 P1, PASSENGER_CARD2 P2, Card C " +
+                    "where P1.PHONE = P2.PHONE AND P1.CARD_NUM = C.CARD_NUM";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(select);
 
             while(rs.next()) {
-                Vector<Object> tuple = new Vector<>();
+                Vector<String> tuple = new Vector<>();
                 tuple.add(rs.getString("Name"));
-                tuple.add(rs.getInt("SIN"));
+                tuple.add(String.valueOf(rs.getInt("SIN")));
                 tuple.add(rs.getString("CardNum"));
-                tuple.add(rs.getInt("PIN"));
+                tuple.add(String.valueOf(rs.getInt("PIN")));
                 tuple.add(rs.getString("UserID"));
                 tuple.add(rs.getString("Email"));
                 tuple.add(rs.getString("Phone"));
@@ -184,6 +183,38 @@ public class PassengerHandler {
             rollbackConnection(connection);
         }
         return Passengers;
+    }
+
+
+
+
+    protected static Vector<String> getPassengerCardColumn(Connection connection){
+
+        Vector<String> column = new Vector<>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.PHONE AS Phone" +
+            " from PASSENGER_CARD1 P1, PASSENGER_CARD2 P2 " +
+                    "where P1.PHONE = P2.PHONE ";
+            ResultSet rs = stmt.executeQuery(select);
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            // display column names;
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                // get column name
+                column.add(rsmd.getColumnName(i+1));
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return column;
     }
 
     private static void rollbackConnection(Connection connection) {

@@ -1,6 +1,5 @@
 package cpsc304.database;
 
-import cpsc304.controller.Passenger;
 import cpsc304.model.entities.Card;
 import cpsc304.model.entities.PassengerCard1;
 import cpsc304.model.entities.PassengerCard2;
@@ -9,11 +8,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.BufferedReader;
 import java.util.Vector;
@@ -130,14 +126,20 @@ public class DatabaseConnectionHandler {
         PassengerHandler.updatePassengerCardInt(attribute, user_id, connection);
     }
 
+
+    //nested update operation on update card Balance
     public void updatePassengerCardBalance(double value, String user_id, Connection connection) {
         PassengerHandler.updatePassengerCardBalance(value, user_id, connection);
     }
 
 
     /* Select all operation in one table in database */
-    public  Vector<Vector<Object>>  getAllPassenger(Connection connection) {
+    public Vector<Vector<String>> getAllPassenger() {
         return PassengerHandler.getAllPassenger(connection);
+    }
+
+    public Vector<String> getPassengerCardColumn() {
+        return PassengerHandler.getPassengerCardColumn(connection);
     }
 
 
@@ -166,5 +168,6 @@ public class DatabaseConnectionHandler {
     public AdminHandler getAdminHandler() {
         return adminHandler;
     }
+
 
 }

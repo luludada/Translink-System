@@ -100,9 +100,10 @@ create table passenger_card1(
 	phone char(20),
 	user_id char(20) not null unique,
 	email char(20),
+	age integer,
 	pin integer,
 	card_num char(20) unique,
-    foreign key (phone) references passenger_card2,
+	foreign key(phone) references passenger_card2,
 	foreign key (card_num) references card);
 
 create table passenger_take_vehicle (
@@ -401,19 +402,19 @@ insert into passenger_card2
 values ( '7783334444' , 'Elsa' );
 
 insert into passenger_card1
-values ( '501' , '7780000000' , 'aaaaa' , 'aaaaa@ubc.ca' , '100' , '1000' );
+values ( '501' , '7780000000' , 'aaaaa' , "20", 'aaaaa@ubc.ca' , '100' , '1000' );
 
 insert into passenger_card1
-values ( '502' , '7785556666' , 'bbbbb' , 'bbbbb@ubc.ca' , '200' , '2000' );
+values ( '502' , '7785556666' , 'bbbbb' , "39", 'bbbbb@ubc.ca' , '200' , '2000' );
 
 insert into passenger_card1
-values ( '503' , '7788889999' , 'ccccc' , 'ccccc@ubc.ca' , '001' , '0001' );
+values ( '503' , '7788889999' , 'ccccc' , "66", 'ccccc@ubc.ca' , '001' , '0001' );
 
 insert into passenger_card1
-values ( '504' , '7789000000' , 'ddddd' , 'ddddd@ubc.ca' , '300' , '3000' );
+values ( '504' , '7789000000' , 'ddddd' , "28", 'ddddd@ubc.ca' , '300' , '3000' );
 
 insert into passenger_card1
-values ( '505' , '7783334444' , 'eeeee' , 'eeeee@ubc.ca' , '002' , '0002' );
+values ( '505' , '7783334444' , 'eeeee' , "10", 'eeeee@ubc.ca' , '002' , '0002' );
 
 insert into passenger_take_vehicle
 values ( '501', '26-FEB-20 8:00:00', '2.85', '10');
