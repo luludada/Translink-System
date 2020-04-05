@@ -22,7 +22,7 @@ public class DriverHandler {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select vehicle_follow_drive1.vehicle_id,vehicle_follow_drive1.route_id"
                     + " from vehicle_follow_drive1,vehicle_follow_drive2 where " +
-                    "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone and vehicle_follow_drive2.name='" + name + "'");
+                    "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone and " + name);
 
             while (rs.next()) {
                 driver = new Driver(Integer.parseInt(rs.getString("vehicle_id").trim()),

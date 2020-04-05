@@ -13,12 +13,12 @@ public class Main{
 
 
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-//        boolean didConnect = dbHandler.login("ora_huangk37", "a80403090");
-//        if (didConnect) {
-//            admin.adminHandler = dbHandler.getAdminHandler();
-//            drive.driverHandler = dbHandler.getDriverHandler();
-//            passenger.passengerHandler = dbHandler.getPassengerHandler();
-//        }
+        boolean didConnect = dbHandler.login("ora_huangk37", "a80403090");
+        if (didConnect) {
+            admin.adminHandler = dbHandler.getAdminHandler();
+            drive.driverHandler = dbHandler.getDriverHandler();
+            passenger.passengerHandler = dbHandler.getPassengerHandler();
+        }
 
         new InsertWindow(dbHandler);
 

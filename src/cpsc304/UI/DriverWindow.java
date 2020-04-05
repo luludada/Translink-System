@@ -40,8 +40,12 @@ public class DriverWindow extends JPanel{
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
-        panel.add(new JLabel("name"), c);
+        panel.add(new JLabel("Format (replace x by input) : name='x', sin=x, "), c);
         c.gridy = 2;
+        panel.add(new JLabel("vehicle_follow_drive1.phone='x', license_id='x'"), c);
+        c.gridy = 3;
+        panel.add(new JLabel(" "), c);
+        c.gridy = 4;
         panel.add(new JLabel("name"), c);
 
         textField1 = new JTextField(15);
@@ -49,7 +53,7 @@ public class DriverWindow extends JPanel{
         c.gridx = 1;
         c.gridy = 1;
         panel.add(textField1, c);
-        c.gridy = 2;
+        c.gridy = 4;
         panel.add(textField2, c);
 
 
@@ -63,7 +67,7 @@ public class DriverWindow extends JPanel{
 
         JButton button2 = new JButton("Get passenger number");
         button2.addActionListener((e)->delegate.getPassengernum(textField2.getText()));
-        c.gridy = 2;
+        c.gridy = 4;
         panel.add(button2, c);
         //buttonsPanel.add(new JLabel());
 
@@ -79,7 +83,7 @@ public class DriverWindow extends JPanel{
         scrollConstraint.fill = GridBagConstraints.BOTH;
         scrollConstraint.gridwidth = GridBagConstraints.REMAINDER;
         scrollConstraint.gridx = 0;
-        scrollConstraint.gridy= 3;
+        scrollConstraint.gridy= 5;
         panel.add(scrollPane, scrollConstraint);
 
 
