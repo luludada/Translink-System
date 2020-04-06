@@ -26,7 +26,7 @@ public class DriverWindow extends JPanel{
 
     public void launch(DriverWindowDelegate delegate) {
         this.delegate = delegate;
-        frame = new JFrame();
+        frame = new JFrame("Driver");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         this.init();
