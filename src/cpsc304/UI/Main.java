@@ -20,7 +20,7 @@ public class Main{
             passenger.passengerHandler = dbHandler.getPassengerHandler();
         }
 
-        new InsertWindow(dbHandler);
+        //new InsertWindow(dbHandler);
 
         start.launch(admin, drive, passenger);
         //admin.start();
