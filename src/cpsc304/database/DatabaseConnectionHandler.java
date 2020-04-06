@@ -60,9 +60,9 @@ public class DatabaseConnectionHandler {
             }
             connection = DriverManager.getConnection(ORACLE_URL, username, password);
             connection.setAutoCommit(false);
-//            passengerHandler = new PassengerHandler(connection);
+            //passengerHandler = new PassengerHandler(connection);
             adminHandler = new AdminHandler(connection);
-//            driverHandler = new DriverHandler(connection);
+            driverHandler = new DriverHandler(connection);
             System.out.println("\nConnected to Oracle!");
             return true;
         } catch (SQLException e) {
