@@ -37,7 +37,7 @@ public class JoinWindow extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("findName")) {
-            dbhandler.FindALLPassengerName();
+            //dbhandler.FindALLPassengerName();
             Vector<String> col = new Vector<String>();
             col.add("Name");
             tb.updateTable(dbhandler.FindALLPassengerName(), col, "InnerJoin Find Name");

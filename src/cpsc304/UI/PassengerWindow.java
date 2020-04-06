@@ -29,11 +29,12 @@ public class PassengerWindow extends JPanel implements ActionListener {
         frame = new JFrame("Passenger");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        this.init(dbhandler);
+        this.dbhandler = dbHandler;
+        this.init();
         frame.add(this);
         frame.setVisible(true);
     }
-    private void init(DatabaseConnectionHandler dbhandler) {
+    private void init() {
 
         JPanel panel = new JPanel(new GridBagLayout());
 
