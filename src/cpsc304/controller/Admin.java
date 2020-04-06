@@ -19,9 +19,9 @@ public class Admin implements AdminWindowDelegate {
         adminWindow.launch(this);
     }
 
-    public void getAllDrivers() {
-        Driver[] drivers  = adminHandler.getAllDrivers();
-        adminWindow.displayDriverList(drivers);
+    public void getAllDrivers(String field, int numFields) {
+        String[][] drivers  = adminHandler.getAllDrivers(field, numFields);
+        adminWindow.displayDriverList(drivers, field);
     }
 
     public void sumVehicleFee() {

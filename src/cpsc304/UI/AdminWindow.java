@@ -27,10 +27,12 @@ public class AdminWindow extends JPanel{
     private JFrame frame;
     private JScrollPane scrollPane;
 
+    private boolean[] colBitmap = new boolean[2];
+
     public void launch(AdminWindowDelegate delegate) {
         this.delegate = delegate;
 
-        frame = new JFrame();
+        frame = new JFrame("Administrator");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         this.init();
@@ -41,10 +43,19 @@ public class AdminWindow extends JPanel{
     private void init() {
         JPanel panel = new JPanel(new GridBagLayout());
 
-        JPanel inputPanel = new JPanel(new GridBagLayout());
+        JPanel inputPanel = new JPanel(new GridLayout(8,1));
+        JCheckBox cb1 = new JCheckBox("name");
+        cb1.addActionListener((e)->{colBitmap[0]= cb1.isSelected();});
+        JCheckBox cb2 = new JCheckBox("phone");
+        cb2.addActionListener((e)->{colBitmap[1]= cb2.isSelected();});
+        inputPanel.add(cb1);
+        inputPanel.add(cb2);
+        inputPanel.add(new JLabel());
+
         inputPanel.add(new JLabel("Passenger's SIN: "));
         textField = new JTextField(TEXTFIELD);
         inputPanel.add(textField);
+
         GridBagConstraints inputConstraint = new GridBagConstraints();
         inputConstraint.gridx = 0;
         inputConstraint.gridy = 0;
@@ -53,7 +64,7 @@ public class AdminWindow extends JPanel{
 
         JPanel buttonsPanel = new JPanel(new GridLayout(8, 1));
         JButton button1 = new JButton("GET ALL DRIVERS");
-        button1.addActionListener((e)->delegate.getAllDrivers());
+        button1.addActionListener((e)->performGetDriver());
         buttonsPanel.add(button1);
         buttonsPanel.add(new JLabel());
         JButton button2 = new JButton("SUM VEHICLE FEES");
@@ -90,24 +101,43 @@ public class AdminWindow extends JPanel{
         add(panel);
     }
 
-    public void displayDriverList(Driver[] drivers) {
-        ArrayList <String> strList = new ArrayList<>(drivers.length);
-        for (int i = 0; i < drivers.length; i++) {
-            strList.add(String.format("%-15s %-15s", drivers[i].name, drivers[i].phone));
-        }
-        final JList<String> list = new JList<String>(strList.toArray(new String[strList.size()]));
+    private void performGetDriver() {
+        String [] cols = {"name", "phone"};
+        String field = "";
+        int numFields = 0;
 
-        setDisplay(list);
+        for (int i = 0; i < cols.length; i++) {
+            if (numFields > 0 && colBitmap[i]) field = field.concat(", ");
+            if (colBitmap[i]) {
+                field = field.concat(cols[i]);
+                numFields ++;
+            }
+        }
+        System.out.println(field);
+        delegate.getAllDrivers(field, numFields);
+    }
+    public void displayDriverList(String[][] drivers, String field) {
+        String [] colName = field.split(",");
+        JTable table = new JTable(drivers, colName);
+        setDisplay(table);
+
+
+        //final JList<String> list = new JList<String>(strList.toArray(new String[strList.size()]));
+
+        //setDisplay(list);
     }
 
     public void displayVehicleFee(VehicleFee[] vehicles) {
         ArrayList <String> strList = new ArrayList<>(vehicles.length);
+        String[][] rowdata = new String[vehicles.length][2];
+        String [] colName = {"vehicle_id", "fee"};
         for (int i = 0; i < vehicles.length; i++) {
-            strList.add(String.format("%-15s %-15s", vehicles[i].vehicle_id , vehicles[i].fee));
+            rowdata[i][0] = Integer.toString(vehicles[i].vehicle_id);
+            rowdata[i][1] = Double.toString(vehicles[i].fee);
         }
-        final JList<String> list = new JList<String>(strList.toArray(new String[strList.size()]));
-
-        setDisplay(list);
+        //final JList<String> list = new JList<String>(strList.toArray(new String[strList.size()]));
+        JTable table = new JTable(rowdata, colName);
+        setDisplay(table);
     }
 
     private void performDelete (){
@@ -128,12 +158,17 @@ public class AdminWindow extends JPanel{
 
     public void displayGoodPassengers (String[] passengers) {
         final JList<String> list = new JList<String>(passengers);
-        setDisplay(list);
+        String [] colName = {"user_id"};
+        String [][] rowData = new String[passengers.length][1];
+        for (int i = 0; i < passengers.length; i++) {
+            rowData[i][0] = passengers[i];
+        }
+
+        setDisplay(new JTable(rowData, colName));
     }
 
-    private void setDisplay (JList <String> list) {
-        scrollPane.setViewportView(list);
-        list.setLayoutOrientation(JList.VERTICAL);
+    private void setDisplay (Component c) {
+        scrollPane.setViewportView(c);
         scrollPane.doLayout();
         frame.setVisible(true);
     }

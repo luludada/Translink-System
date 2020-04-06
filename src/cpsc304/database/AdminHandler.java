@@ -1,5 +1,6 @@
 package cpsc304.database;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -16,14 +17,11 @@ public class AdminHandler extends DatabaseConnectionHandler{
         this.connection = connection;
     }
 
-    public Driver[] getAllDrivers() {
-        ArrayList<Driver> result = new ArrayList<Driver>();
+    public String [][] getAllDrivers(String attribute, int numFields) {
+        ArrayList<String[]> result = new ArrayList<>();
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select name, vehicle_follow_drive1.phone, sin, license_id from "
-                                                    + "vehicle_follow_drive1, vehicle_follow_drive2 where "
-                                                    + "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone "
-                                                    + "order by name");
+            ResultSet rs = stmt.executeQuery("select " + attribute + " from vehicle_follow_drive2" );
 
             /*// get info on ResultSet
     		ResultSetMetaData rsmd = rs.getMetaData();
@@ -35,22 +33,23 @@ public class AdminHandler extends DatabaseConnectionHandler{
     			// get column name and print it
     			System.out.printf("%-15s", rsmd.getColumnName(i + 1));
     		}*/
-
+            ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
-                Driver driver = new Driver(-1,
-                        -1,
-                        -1,
-                        rs.getInt("sin"),
-                        rs.getString("phone"),
-                        rs.getString("name").trim(),
-                        rs.getString("license_id"));
-                result.add(driver);
-                System.out.println(driver.name);
+                String[] row = new String[rsmd.getColumnCount()];
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    row[i] = rs.getString(rsmd.getColumnName(i+1));
+                }
+                result.add(row);
             }
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return result.toArray(new Driver[result.size()]);
+
+        String[][] retVal = new String[result.size()][numFields];
+        for (int i = 0; i < result.size(); i++) {
+                System.arraycopy(result.get(i),0, retVal[i], 0, result.get(i).length);
+        }
+        return retVal;
     }
 
     public String deletePassenger(int sin) {
