@@ -113,7 +113,11 @@ public class AdminWindow extends JPanel{
                 numFields ++;
             }
         }
-        System.out.println(field);
+        if (numFields == 0) {
+            field = "name, phone";
+            numFields = 2;
+        }
+        //System.out.println(field);
         delegate.getAllDrivers(field, numFields);
     }
     public void displayDriverList(String[][] drivers, String field) {
