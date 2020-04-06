@@ -23,16 +23,16 @@ city char(20) );
 create table vehicle_follow_drive2(
 	phone char(20) primary key,
 	name char(20));
- 
+
 create table route2(
 	station_num integer primary key,
 	approx_time char(20));
- 
+
 create table route1(
 	route_id integer primary key,
 	station_num integer,
 	foreign key (station_num) references route2);
- 
+
 create table vehicle_follow_drive1(
 	vehicle_id integer primary key,
 	capacity integer,
@@ -50,7 +50,7 @@ create table stop_at(
 	primary key (station_id, vehicle_id),
 	foreign key (station_id) references station,
 	foreign key (vehicle_id) references vehicle_follow_drive1);
-	
+
 create table port(
 	station_id integer primary key,
 	dock_num integer,
@@ -71,7 +71,7 @@ create table bus(
 	vehicle_id integer primary key,
 	plate_num char(20),
 	foreign key (vehicle_id) references vehicle_follow_drive1);
- 
+
 create table ferry2(
 	ferry_num integer primary key,
 	max_wave integer);
@@ -90,10 +90,10 @@ create table obtain_schedule(
 	primary key (station_id, route_id),
 	foreign key (station_id) references station,
 	foreign key (route_id) references route1);
- 
+
 create table passenger_card2(
 	phone char(20) primary key,
-	name char(20)); 
+	name char(20));
 
 create table passenger_card1(
 	sin integer primary key,
@@ -114,8 +114,8 @@ create table passenger_take_vehicle (
     primary key (sin, tk_time, vehicle_id),
     foreign key (sin) references passenger_card1 on delete cascade,
     foreign key (vehicle_id) references vehicle_follow_drive1);
- 
- 
+
+
 insert into station
 values ( '1' , 'west van' );
 
@@ -402,19 +402,19 @@ insert into passenger_card2
 values ( '7783334444' , 'Elsa' );
 
 insert into passenger_card1
-values ( '501' , '7780000000' , 'aaaaa' , "20", 'aaaaa@ubc.ca' , '100' , '1000' );
+values ( '501' , '7780000000' , 'aaaaa' , 'aaaaa@ubc.ca' , '20', '100' , '1000' );
 
 insert into passenger_card1
-values ( '502' , '7785556666' , 'bbbbb' , "39", 'bbbbb@ubc.ca' , '200' , '2000' );
+values ( '502' , '7785556666' , 'bbbbb' , 'bbbbb@ubc.ca' , '39', '200' , '2000' );
 
 insert into passenger_card1
-values ( '503' , '7788889999' , 'ccccc' , "66", 'ccccc@ubc.ca' , '001' , '0001' );
+values ( '503' , '7788889999' , 'ccccc' , 'ccccc@ubc.ca' , '66', '001' , '0001' );
 
 insert into passenger_card1
-values ( '504' , '7789000000' , 'ddddd' , "28", 'ddddd@ubc.ca' , '300' , '3000' );
+values ( '504' , '7789000000' , 'ddddd' , 'ddddd@ubc.ca' , '28', '300' , '3000' );
 
 insert into passenger_card1
-values ( '505' , '7783334444' , 'eeeee' , "10", 'eeeee@ubc.ca' , '002' , '0002' );
+values ( '505' , '7783334444' , 'eeeee' , 'eeeee@ubc.ca' , '10', '002' , '0002' );
 
 insert into passenger_take_vehicle
 values ( '501', '26-FEB-20 8:00:00', '2.85', '10');
