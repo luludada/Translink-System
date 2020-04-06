@@ -234,10 +234,10 @@ insert into vehicle_follow_drive1
 values ( '13' , '80' , '84' , '104' , '1110002222' , 'D10' );
 
 insert into vehicle_follow_drive1
-values ( '14' , '80' , '99' , '105' , '2223334444' , 'F10' );
+values ( '14' , '80' , '99' , '105' , '2223334444' , 'E10' );
 
 insert into vehicle_follow_drive1
-values ( '20' , '100' , '300' , '201' , '5556667777' , 'H10' );
+values ( '20' , '100' , '300' , '201' , '5556667777' , 'F10' );
 
 insert into vehicle_follow_drive1
 values ( '21' , '110' , '301' , '202' , '8889990000' , 'G10' );

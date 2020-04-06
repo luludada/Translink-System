@@ -14,7 +14,7 @@ public class PassengerCard1 {
 
 
 
-    public PassengerCard1(int SIN, String card_num, int vehicle_id, String phone, String name, String user_id, String email, int PIN, int age) {
+    public PassengerCard1(int SIN, String card_num, String phone, String user_id, String email, int PIN, int age) {
         this.SIN = SIN;
         this.card_num = card_num;
         this.PIN = PIN;

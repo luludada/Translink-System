@@ -105,7 +105,7 @@ public class DatabaseConnectionHandler {
     }
 
     /* Insert operation in database */
-    public void insertPassengerCard(PassengerCard1 p1, PassengerCard2 p2, Card card, Connection connection) {
+    public void insertPassengerCard(PassengerCard1 p1, PassengerCard2 p2, Card card) {
         PassengerHandler.insertPassengerCard(p1, p2, card, connection);
     }
 
@@ -118,17 +118,17 @@ public class DatabaseConnectionHandler {
 
 
     /* Update operation in database */
-    public void updatePassengerStr(String attribute, String user_id, Connection connection) {
+    public void updatePassengerStr(String attribute, String user_id) {
         PassengerHandler.updatePassengerStr(attribute, user_id, connection);
     }
 
-    public void updatePassengerCardInt(int attribute, String user_id, Connection connection) {
+    public void updatePassengerCardInt(int attribute, String user_id) {
         PassengerHandler.updatePassengerCardInt(attribute, user_id, connection);
     }
 
 
     //nested update operation on update card Balance
-    public void updatePassengerCardBalance(double value, String user_id, Connection connection) {
+    public void updatePassengerCardBalance(double value, String user_id) {
         PassengerHandler.updatePassengerCardBalance(value, user_id, connection);
     }
 
@@ -141,6 +141,19 @@ public class DatabaseConnectionHandler {
     public Vector<String> getPassengerCardColumn() {
         return PassengerHandler.getPassengerCardColumn(connection);
     }
+
+    public Vector<Vector<String>> getAllCard() {
+        return PassengerHandler.getAllCard(connection);
+    }
+
+    public Vector<String> getCardColumn() {
+        return PassengerHandler.getCardColumn(connection);
+    }
+
+    public Vector<Vector<String>> FindALLPassengerName() {
+        return PassengerHandler.FindALLPassengerName(connection);
+    }
+
 
 
     /*Projection operation in one table */

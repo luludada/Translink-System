@@ -20,9 +20,6 @@ public class PassengerHandler {
 
     //Insert
     public static void insertPassengerCard(PassengerCard1 p1, PassengerCard2 p2, Card card, Connection connection) {
-        Random random = new Random();
-        String cardNo = String.format("%04d", random.nextInt(10000));
-        int pin = random.nextInt(999);
 
         try {
             PreparedStatement ps1 = connection.prepareStatement("INSERT INTO passenger_card1 VALUES (?,?,?,?,?,?,?)");
@@ -31,8 +28,8 @@ public class PassengerHandler {
             ps1.setString(3, p1.getUserID());
             ps1.setString(4, p1.getEmail());
             ps1.setInt(5, p1.getAge());
-            ps1.setInt(6, pin);
-            ps1.setString(7, cardNo);
+            ps1.setInt(6, p1.getPIN());
+            ps1.setString(7, p1.getCardNo());
 
             ps1.executeUpdate();
             connection.commit();
@@ -59,10 +56,9 @@ public class PassengerHandler {
 
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO card VALUES (?,?, ?)");
-            ps.setString(1, cardNo);
-            ps.setDouble(2, 0);
-            int cvn = random.nextInt(999);
-            ps.setInt(3, cvn);
+            ps.setString(1, card.getCardNo());
+            ps.setDouble(2, card.getBalance());
+            ps.setInt(3, card.getCVN());
             System.out.println("Add Card SUCCESS!");
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -217,13 +213,91 @@ public class PassengerHandler {
         return column;
     }
 
-    private static void rollbackConnection(Connection connection) {
+
+
+    //Select All query
+    public static Vector<Vector<String>>  getAllCard(Connection connection) {
+
+        Vector<Vector<String>> Cards = new Vector<>();
+
+        try {
+            String select = "SELECT * FROM CARD";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(select);
+
+            while(rs.next()) {
+                Vector<String> tuple = new Vector<>();
+                tuple.add(rs.getString("card_num"));
+                tuple.add(String.valueOf(rs.getDouble("balance")));
+                tuple.add(String.valueOf(rs.getInt("cvn")));
+                Cards.add(tuple);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection(connection);
+        }
+        return Cards;
+    }
+
+
+    public static Vector<String> getCardColumn(Connection connection){
+
+        Vector<String> cardColumn = new Vector<>();
+
+        try {
+            Statement stmtCard = connection.createStatement();
+            String selectCard = "SELECT * FROM CARD";
+            ResultSet rsCard = stmtCard.executeQuery(selectCard);
+
+            // get info on ResultSet
+            ResultSetMetaData rsmdCard = rsCard.getMetaData();
+
+            // display column names;
+            for (int i = 0; i < rsmdCard.getColumnCount(); i++) {
+                // get column name
+                cardColumn.add(rsmdCard.getColumnName(i+1));
+            }
+
+            rsCard.close();
+            stmtCard.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return cardColumn;
+    }
+
+    // Join Query
+    public static Vector<Vector<String>> FindALLPassengerName(Connection connection) {
+        Vector<Vector<String>> Names = new Vector<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT p2.name FROM PASSENGER_CARD1 p1 INNER JOIN PASSENGER_CARD2 p2 ON p1.PHONE = p2.PHONE");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Vector<String> tuple = new Vector<>();
+                tuple.add(rs.getString("Name"));
+                Names.add(tuple);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Names;
+    }
+
+
+        private static void rollbackConnection(Connection connection) {
         try  {
             connection.rollback();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
     }
+
 
 
     //project operation on the account detail by joining PassengerCard and Card Table
