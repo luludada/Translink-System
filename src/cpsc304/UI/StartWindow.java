@@ -16,18 +16,14 @@ import cpsc304.controller.Passenger;
 
 public class StartWindow extends JPanel {
 
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = 200;
 
     private Admin admin;
     private Drive drive;
     private Passenger passenger;
 
-    private JTextField textField1;
-    private JTextField textField2;
-    //private DriverWindowDelegate delegate;
     private JFrame frame;
-    private JScrollPane scrollPane;
 
     public void launch(Admin admin, Drive drive, Passenger passenger) {
 
@@ -35,7 +31,7 @@ public class StartWindow extends JPanel {
         this.drive = drive;
         this.passenger = passenger;
 
-        frame = new JFrame();
+        frame = new JFrame("Translink-System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         this.init();
@@ -55,40 +51,27 @@ public class StartWindow extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
 
 
-        //JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
+        JPanel buttonsPanel = new JPanel(new GridLayout(5, 1));
         JButton button1 = new JButton("Admin");
         button1.addActionListener((e) -> admin.start());
         c.gridx = 1;
         c.gridy = 1;
-        panel.add(button1, c);
-        //panel.add(new JLabel());
+        buttonsPanel.add(button1, c);
+        buttonsPanel.add(new Label());
+
 
         JButton button2 = new JButton("Driver");
         button2.addActionListener((e) -> drive.start());
-        c.gridy = 2;
-        panel.add(button2, c);
-        //buttonsPanel.add(new JLabel());
+        c.gridy = 3;
+        buttonsPanel.add(button2, c);
+        buttonsPanel.add(new JLabel());
 
         JButton button3 = new JButton("Passenger");
         button3.addActionListener((e) -> passenger.start());
-        c.gridy = 3;
-        panel.add(button3, c);
+        c.gridy = 5;
+        buttonsPanel.add(button3, c);
 
-        /*GridBagConstraints buttonsConstraint = new GridBagConstraints();
-        buttonsConstraint.gridx = 0;
-        buttonsConstraint.gridy = 1;
-        panel.add(buttonsPanel, buttonsConstraint);*/
-
-        JTextArea textArea = new JTextArea(5, 20);
-        textArea.setEditable(false);
-        scrollPane = new JScrollPane(textArea);
-        GridBagConstraints scrollConstraint = new GridBagConstraints();
-        scrollConstraint.fill = GridBagConstraints.BOTH;
-        scrollConstraint.gridwidth = GridBagConstraints.REMAINDER;
-        scrollConstraint.gridx = 0;
-        scrollConstraint.gridy = 4;
-        panel.add(scrollPane, scrollConstraint);
-
+        panel.add(buttonsPanel);
         add(panel);
     }
 }
