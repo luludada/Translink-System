@@ -15,7 +15,7 @@ public class TableWindow {
     }
 
     public void updateTable(Vector<Vector<String>> rowData, Vector<String> columnNames, String title){
-        dataFrame.setVisible(false);
+        dataFrame.setVisible(true);
         dataFrame = new JFrame(title);
         dataTable = new JTable(rowData, columnNames);
         sp = new JScrollPane(dataTable);

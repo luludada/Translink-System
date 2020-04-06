@@ -10,11 +10,11 @@ public class Passenger implements PassengerDelegate {
 
     private PassengerWindow passengerWindow = null;
     public PassengerHandler passengerHandler = null;
-    public DatabaseConnectionHandler dbHandler = null;
+    public DatabaseConnectionHandler dbHandler;
 
     public void start() {
         passengerWindow = new PassengerWindow();
-        passengerWindow.launch(this);
+        passengerWindow.launch(this, dbHandler);
     }
 
 //    public PassengerCard1 getPassengerCard(String user_id) {
