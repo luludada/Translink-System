@@ -118,13 +118,14 @@ public class DatabaseConnectionHandler {
 
 
     /* Update operation in database */
-    public void updatePassengerStr(String attribute, String user_id) {
-        PassengerHandler.updatePassengerStr(attribute, user_id, connection);
+    public void updatePassengerStr(String attribute, String value, String user_id) {
+        PassengerHandler.updatePassengerStr(attribute, value, user_id, connection);
     }
 
-    public void updatePassengerCardInt(int attribute, String user_id) {
-        PassengerHandler.updatePassengerCardInt(attribute, user_id, connection);
-    }
+//
+//    public void updatePassengerCardInt(int attribute, String user_id) {
+//        PassengerHandler.updatePassengerCardInt(attribute, user_id, connection);
+//    }
 
 
     //nested update operation on update card Balance

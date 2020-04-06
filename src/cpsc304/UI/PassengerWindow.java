@@ -5,12 +5,13 @@ import cpsc304.delegates.PassengerDelegate;
 
 import javax.sql.rowset.Joinable;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class PassengerWindow extends JFrame implements ActionListener {
+public class PassengerWindow extends JPanel implements ActionListener {
 
 
     private static final int WIDTH = 800;
@@ -23,17 +24,19 @@ public class PassengerWindow extends JFrame implements ActionListener {
 
 
 
-    public void launch(PassengerDelegate delegate) {
+    public void launch(PassengerDelegate delegate, DatabaseConnectionHandler dbHandler) {
         this.delegate = delegate;
-        frame = new JFrame();
+        frame = new JFrame("Passenger");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        this.init();
+        this.init(dbhandler);
         frame.add(this);
         frame.setVisible(true);
     }
-    private void init() {
+    private void init(DatabaseConnectionHandler dbhandler) {
+
         JPanel panel = new JPanel(new GridBagLayout());
+
 
         JButton insertBtn = new JButton("Insert Passenger");
         insertBtn.setBounds(100,100, 200,30);
@@ -54,7 +57,8 @@ public class PassengerWindow extends JFrame implements ActionListener {
         add(joinBtn);
 
         add(panel);
-        setVisible(true);
+        this.setVisible(true);
+
 
     }
 

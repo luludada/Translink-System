@@ -17,7 +17,6 @@ public class PassengerHandler {
     private static final String WARNING_TAG = "[WARNING]";
 
 
-
     //Insert
     public static void insertPassengerCard(PassengerCard1 p1, PassengerCard2 p2, Card card, Connection connection) {
 
@@ -70,8 +69,9 @@ public class PassengerHandler {
     //Delete
     public void deletePassengerCard(String user_id, Connection connection) {
         try {
-            String delete = "delete from PASSENGER_CARD1 where USER_ID = " + user_id ;
+            String delete = "delete from PASSENGER_CARD1 where USER_ID = ? ";
             PreparedStatement ps = connection.prepareStatement(delete);
+            ps.setString(1, user_id);
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
@@ -87,12 +87,12 @@ public class PassengerHandler {
     }
 
     //Update with String
-    public static void updatePassengerStr(String attribute, String user_id, Connection connection) {
+    public static void updatePassengerStr(String attribute, String value, String user_id, Connection connection) {
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET ? = ? WHERE USER_ID = ?");
             ps.setString(1, attribute);
-            ps.setString(2, attribute);
-            ps.setString(2, user_id);
+            ps.setString(2, value);
+            ps.setString(3, user_id);
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
                 System.out.println(WARNING_TAG + " Passenger " + user_id + " does not exist!");
@@ -108,34 +108,34 @@ public class PassengerHandler {
 
 
     //update with Integer
-    public static void updatePassengerCardInt(int attribute, String user_id, Connection connection) {
-        try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET ? = ? WHERE USER_ID = ?");
-            ps.setInt(1, attribute);
-            ps.setInt(1, attribute);
-            ps.setString(2, user_id);
-
-            int rowCount = ps.executeUpdate();
-            if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Passenger " + user_id + " does not exist!");
-            }
-
-            connection.commit();
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            rollbackConnection(connection);
-        }
-    }
+//    public static void updatePassengerCardInt(int attribute, String user_id, Connection connection) {
+//        try {
+//            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET ? = ? WHERE USER_ID = ?");
+//            ps.setInt(1, attribute);
+//            ps.setInt(1, attribute);
+//            ps.setString(2, user_id);
+//
+//            int rowCount = ps.executeUpdate();
+//            if (rowCount == 0) {
+//                System.out.println(WARNING_TAG + " Passenger " + user_id + " does not exist!");
+//            }
+//
+//            connection.commit();
+//            ps.close();
+//        } catch (SQLException e) {
+//            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+//            rollbackConnection(connection);
+//        }
+//    }
 
     //update operation on the cardBalance by joining PassengerCard and Card Table
-    public static void updatePassengerCardBalance(double value, String user_id, Connection connection) {
+    public static void updatePassengerCardBalance(double value, String card_num, Connection connection) {
         try{
             PreparedStatement ps = connection.prepareStatement("UPDATE CARD " +
                     "SET BALANCE = BALANCE + ? " +
-                    "WHERE CARD.CARD_NUM = (SELECT p.card_num FROM PASSENGER_CARD1 p where p.USER_ID = ?)");
+                    "WHERE CARD.CARD_NUM = ?");
             ps.setDouble(1, value);
-            ps.setString(2, user_id);
+            ps.setString(2, card_num);
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
                 System.out.println(WARNING_TAG + " does not exist!");

@@ -18,6 +18,8 @@ public class UpdateWindow extends JFrame implements ActionListener {
     JTextField balance;
     JTextField card_num;
     JTextField user_id;
+    String[] P1attributes = {"phone", "email"};
+    final JComboBox<String> cb1 = new JComboBox<String>(P1attributes);
 
     public UpdateWindow(DatabaseConnectionHandler dbhandler) {
         super("Update Window");
@@ -36,8 +38,7 @@ public class UpdateWindow extends JFrame implements ActionListener {
 
         //Not need for passenger_card2 since you only change card 2 when you update phone, so combine at same time
 
-        String[] P1attributes = {"phone", "email"};
-        final JComboBox<String> cb1 = new JComboBox<String>(P1attributes);
+
         cb1.setBounds(80, 200, 100, 30);
         contentPane.add(cb1);
         cb1.setVisible(true);
@@ -61,7 +62,6 @@ public class UpdateWindow extends JFrame implements ActionListener {
         JButton updatePassengerBtn = new JButton("Update PassengerCard1");
         updatePassengerBtn.setBounds(260,250, 100,30);
         updatePassengerBtn.addActionListener(this);
-        updatePassengerBtn.setActionCommand("updatePassengerCard");
         add(updatePassengerBtn);
 
         JLabel Card = new JLabel("Update Card Info");
@@ -75,15 +75,14 @@ public class UpdateWindow extends JFrame implements ActionListener {
 
         balance = new JTextField(TEXT_FIELD_WIDTH);
         balance.setUI(new TransparentText("  Update your Card Balance", Color.gray));
-        balance.setBounds(240,450, 100,30);
+        balance.setBounds(240,450, 200,30);
         add(balance);
+
 
         JButton updateCardBtn = new JButton("Update Card");
         updateCardBtn.setBounds(260,450, 100,30);
         updateCardBtn.addActionListener(this);
-        updateCardBtn.setActionCommand("updateCard");
         add(updateCardBtn);
-
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -94,15 +93,14 @@ public class UpdateWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String option = e.getActionCommand();
         switch(option){
-            case "update":
-                dbhandler.updatePassengerStr(testField1.getText(), user_id.getText());
+            case "Update PassengerCard1":
+                String attribute = cb1.getSelectedItem().toString();
+                dbhandler.updatePassengerStr(attribute, testField1.getText(), user_id.getText());
                 tb.updateTable(dbhandler.getAllPassenger(),dbhandler.getPassengerCardColumn(), "Passenger Card");
-            case "updateCard":
+            case "Update Card":
                 double value = Double.parseDouble(balance.getText());
                 dbhandler.updatePassengerCardBalance(value, card_num.getText());
                 tb.updateTable(dbhandler.getAllCard(),dbhandler.getCardColumn(), "Card");
         }
-
-
     }
 }
