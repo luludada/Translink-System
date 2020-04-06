@@ -6,7 +6,7 @@ public class Card {
     public double balance;
     public int CVN;
 
-    public Card(String card_num, double balance, int CVN) {
+    public Card (String card_num, double balance, int CVN) {
         this.card_num = card_num;
         this.balance = balance;
         this.CVN = CVN;

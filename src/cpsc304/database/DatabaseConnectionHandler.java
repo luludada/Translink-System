@@ -25,8 +25,8 @@ public class DatabaseConnectionHandler {
     private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
-    private static final String username = "ora_ymy0801";
-    private static final String password = "a87216792";
+    private static final String username = "";
+    private static final String password = "";
 
     private Connection connection = null;
     private DriverHandler driverHandler = null;
@@ -72,7 +72,7 @@ public class DatabaseConnectionHandler {
     }
 
 
-     void rollbackConnection() {
+    void rollbackConnection() {
         try  {
             connection.rollback();
         } catch (SQLException e) {
@@ -122,15 +122,15 @@ public class DatabaseConnectionHandler {
         PassengerHandler.updatePassengerStr(attribute, value, user_id, connection);
     }
 
-//
-//    public void updatePassengerCardInt(int attribute, String user_id) {
-//        PassengerHandler.updatePassengerCardInt(attribute, user_id, connection);
-//    }
+
+    public void updatePassengerInt(String attribute, int value, String user_id) {
+        PassengerHandler.updatePassengerInt(attribute, value, user_id, connection);
+    }
 
 
     //nested update operation on update card Balance
-    public void updatePassengerCardBalance(double value, String user_id) {
-        PassengerHandler.updatePassengerCardBalance(value, user_id, connection);
+    public void updatePassengerCardBalance(double value, String card_num) {
+        PassengerHandler.updatePassengerCardBalance(value, card_num, connection);
     }
 
 

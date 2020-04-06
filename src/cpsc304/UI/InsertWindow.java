@@ -76,7 +76,7 @@ public class InsertWindow extends JFrame implements ActionListener {
         insertPassenger.addActionListener(this);
         add(insertPassenger);
 
-        showPassenger = new JButton("Show Passenger");
+        showPassenger = new JButton("Show Card");
         showPassenger.setBounds(360,320, 100,30);
         showPassenger.addActionListener(this);
         add(showPassenger);
@@ -98,18 +98,21 @@ public class InsertWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Insert Passenger")) {
             Random random = new Random();
-                String cardNo = String.format("%04d", random.nextInt(10000));
-                int pin = random.nextInt(999);
-                int sin = Integer.parseInt(SIN.getText());
-                int age = Integer.parseInt(Age.getText());
-                double balance  = 0;
-                int cvn = random.nextInt(999);
-                PassengerCard1 p1 = new PassengerCard1(sin, Phone.getText(), user_id.getText(), Email.getText(), age, pin, cardNo);
-                PassengerCard2 p2 = new PassengerCard2(Phone.getText(), Name.getText());
-                Card card = new Card(cardNo, balance, cvn);
-                dbhandler.insertPassengerCard(p1, p2, card);
-                tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger");
-                tb.updateTable(dbhandler.getAllCard(), dbhandler.getCardColumn(), "Card");
+            String cardNo = String.format("%04d", random.nextInt(10000));
+            int pin = random.nextInt(999) + 100;
+            int sin = Integer.parseInt(SIN.getText());
+            int age = Integer.parseInt(Age.getText());
+            double balance  = 0;
+            int cvn = random.nextInt(999);
+            PassengerCard1 p1 = new PassengerCard1(sin, Phone.getText(), user_id.getText(), Email.getText(), age, pin, cardNo);
+            PassengerCard2 p2 = new PassengerCard2(Phone.getText(), Name.getText());
+            Card card = new Card(cardNo, balance, cvn);
+            dbhandler.insertPassengerCard(p1, p2, card);
+            tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger");
+        }
+
+        if(e.getActionCommand().equals("Show Card")) {
+            tb.updateTable(dbhandler.getAllCard(), dbhandler.getCardColumn(), "Card");
         }
 
     }

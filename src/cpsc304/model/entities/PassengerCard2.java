@@ -4,9 +4,9 @@ public class PassengerCard2 {
     public String phone;
     public String name;
 
-    public PassengerCard2(String phone, String name) {
+    public PassengerCard2 (String phone, String name) {
         this.phone = phone;
-        this.phone = name;
+        this.name = name;
     }
     public String getPhone() {
         return phone;
@@ -15,6 +15,5 @@ public class PassengerCard2 {
     public String getName() {
         return name;
     }
-
 
 }

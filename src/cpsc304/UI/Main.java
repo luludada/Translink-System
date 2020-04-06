@@ -13,7 +13,7 @@ public class Main{
 
 
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-        boolean didConnect = dbHandler.login("username", "pwd"); // REPLACE with your username & pwd
+        boolean didConnect = dbHandler.login("ora_ymy0801", "a87216792"); // REPLACE with your username & pwd
         if (didConnect) {
             admin.adminHandler = dbHandler.getAdminHandler();
             drive.driverHandler = dbHandler.getDriverHandler();

@@ -16,13 +16,11 @@ public class TableWindow {
 
     public void updateTable(Vector<Vector<String>> rowData, Vector<String> columnNames, String title){
         dataFrame.setVisible(false);
-        dataFrame.dispose();
-
         dataFrame = new JFrame(title);
         dataTable = new JTable(rowData, columnNames);
         sp = new JScrollPane(dataTable);
         dataFrame.add(sp);
-        dataFrame.setSize(300,200);
+        dataFrame.setSize(1200,300);
         dataFrame.setVisible(true);
     }
 

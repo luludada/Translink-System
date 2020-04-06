@@ -18,7 +18,7 @@ public class UpdateWindow extends JFrame implements ActionListener {
     JTextField balance;
     JTextField card_num;
     JTextField user_id;
-    String[] P1attributes = {"phone", "email"};
+    String[] P1attributes = {"sin", "email", "age"};
     final JComboBox<String> cb1 = new JComboBox<String>(P1attributes);
 
     public UpdateWindow(DatabaseConnectionHandler dbhandler) {
@@ -59,7 +59,7 @@ public class UpdateWindow extends JFrame implements ActionListener {
         user_id.setBounds(220,200, 100,30);
         add(user_id);
 
-        JButton updatePassengerBtn = new JButton("Update PassengerCard1");
+        JButton updatePassengerBtn = new JButton("Update PassengerCard");
         updatePassengerBtn.setBounds(260,250, 100,30);
         updatePassengerBtn.addActionListener(this);
         add(updatePassengerBtn);
@@ -69,12 +69,12 @@ public class UpdateWindow extends JFrame implements ActionListener {
         contentPane.add(Card);
 
         card_num = new JTextField(TEXT_FIELD_WIDTH);
-        card_num.setUI(new TransparentText("  Enter User ID", Color.gray));
+        card_num.setUI(new TransparentText("  Enter Card Num", Color.gray));
         card_num.setBounds(100,450, 100,30);
         add(card_num);
 
         balance = new JTextField(TEXT_FIELD_WIDTH);
-        balance.setUI(new TransparentText("  Update your Card Balance", Color.gray));
+        balance.setUI(new TransparentText("  Update Card Balance", Color.gray));
         balance.setBounds(240,450, 200,30);
         add(balance);
 
@@ -91,16 +91,25 @@ public class UpdateWindow extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String option = e.getActionCommand();
-        switch(option){
-            case "Update PassengerCard1":
-                String attribute = cb1.getSelectedItem().toString();
+        if(e.getActionCommand().equals("Update PassengerCard")) {
+            String attribute = cb1.getSelectedItem().toString();
+            if(attribute.equals("sin")) {
+                dbhandler.updatePassengerInt(attribute, Integer.parseInt(testField1.getText()), user_id.getText());
+                tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger Card");
+            } else if (attribute.equals("email")) {
                 dbhandler.updatePassengerStr(attribute, testField1.getText(), user_id.getText());
                 tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger Card");
-            case "Update Card":
-                double value = Double.parseDouble(balance.getText());
-                dbhandler.updatePassengerCardBalance(value, card_num.getText());
-                tb.updateTable(dbhandler.getAllCard(), dbhandler.getCardColumn(), "Card");
+            } else {
+                //age
+                dbhandler.updatePassengerInt(attribute, Integer.parseInt(testField1.getText()), user_id.getText());
+                tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger Card");
+            }
+        }
+
+        if (e.getActionCommand().equals("Update Card")) {
+            double value = Double.parseDouble(balance.getText());
+            dbhandler.updatePassengerCardBalance(value, card_num.getText());
+            tb.updateTable(dbhandler.getAllCard(), dbhandler.getCardColumn(), "Card");
         }
     }
 }

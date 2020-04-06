@@ -1,7 +1,5 @@
 package cpsc304.model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class PassengerCard1 {
     public int SIN;
@@ -22,7 +20,6 @@ public class PassengerCard1 {
         this.age = age;
         this.PIN = PIN;
         this.card_num = card_num;
-
     }
 
 

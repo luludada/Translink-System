@@ -20,26 +20,9 @@ public class PassengerHandler {
     //Insert
     public static void insertPassengerCard(PassengerCard1 p1, PassengerCard2 p2, Card card, Connection connection) {
 
-        try {
-            PreparedStatement ps1 = connection.prepareStatement("INSERT INTO passenger_card1 VALUES (?,?,?,?,?,?,?)");
-            ps1.setInt(1, p1.getPIN());
-            ps1.setString(2, p1.getPhone());
-            ps1.setString(3, p1.getUserID());
-            ps1.setString(4, p1.getEmail());
-            ps1.setInt(5, p1.getAge());
-            ps1.setInt(6, p1.getPIN());
-            ps1.setString(7, p1.getCardNo());
 
-            ps1.executeUpdate();
-            connection.commit();
-            ps1.close();
-            System.out.println("Insert PassengerCard1 SUCCESS!");
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-
-            rollbackConnection(connection);
-        }
         try {
+            //Insert PassengerCard2
             PreparedStatement ps2 = connection.prepareStatement("INSERT INTO PASSENGER_CARD2 VALUES (?,?)");
             ps2.setString(1, p2.getPhone());
             ps2.setString(2, p2.getName());
@@ -47,22 +30,44 @@ public class PassengerHandler {
             ps2.executeUpdate();
             connection.commit();
             ps2.close();
+
             System.out.println("Insert PassengerCard2 SUCCESS!");
+
+            //Insert Card
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO card VALUES (?, ?, ?)");
+            ps.setString(1, card.getCardNo());
+            ps.setDouble(2, card.getBalance());
+            ps.setInt(3, card.getCVN());
+
+            ps.executeUpdate();
+            connection.commit();
+
+            ps.close();
+
+            System.out.println("Add Card SUCCESS!");
+
+            //Insert PassengerCard1
+
+            PreparedStatement ps1 = connection.prepareStatement("INSERT INTO passenger_card1 VALUES (?,?,?,?,?,?,?)");
+            ps1.setInt(1, p1.getSIN());
+            ps1.setString(2, p1.getPhone());
+            ps1.setString(3, p1.getUserID());
+            ps1.setString(4, p1.getEmail());
+            ps1.setInt(5, p1.getAge());
+            ps1.setInt(6, p1.getPIN());
+            ps1.setString(7, p1.getCardNo());
+
+
+            ps1.executeUpdate();
+            connection.commit();
+            ps1.close();
+            System.out.println("Add Passenger_Card1 SUCCESS!");
+
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection(connection);
         }
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO card VALUES (?,?, ?)");
-            ps.setString(1, card.getCardNo());
-            ps.setDouble(2, card.getBalance());
-            ps.setInt(3, card.getCVN());
-            System.out.println("Add Card SUCCESS!");
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            rollbackConnection(connection);
-        }
     }
 
 
@@ -89,7 +94,7 @@ public class PassengerHandler {
     //Update with String
     public static void updatePassengerStr(String attribute, String value, String user_id, Connection connection) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET " + attribute + " = " + value + " WHERE USER_ID = " + user_id);
+            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET " + attribute + " = ' " + value + " ' WHERE USER_ID = '" + user_id + "'");
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
@@ -106,34 +111,29 @@ public class PassengerHandler {
 
 
     //update with Integer
-//    public static void updatePassengerCardInt(int attribute, String user_id, Connection connection) {
-//        try {
-//            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET ? = ? WHERE USER_ID = ?");
-//            ps.setInt(1, attribute);
-//            ps.setInt(1, attribute);
-//            ps.setString(2, user_id);
-//
-//            int rowCount = ps.executeUpdate();
-//            if (rowCount == 0) {
-//                System.out.println(WARNING_TAG + " Passenger " + user_id + " does not exist!");
-//            }
-//
-//            connection.commit();
-//            ps.close();
-//        } catch (SQLException e) {
-//            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//            rollbackConnection(connection);
-//        }
-//    }
+    public static void updatePassengerInt(String attribute, int value, String user_id, Connection connection) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET " + attribute + " = '" + value + "' WHERE USER_ID = '" + user_id + "'");
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(WARNING_TAG + " Passenger " + user_id + " does not exist!");
+            }
+
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection(connection);
+        }
+    }
 
     //update operation on the cardBalance by joining PassengerCard and Card Table
     public static void updatePassengerCardBalance(double value, String card_num, Connection connection) {
         try{
             PreparedStatement ps = connection.prepareStatement("UPDATE CARD " +
-                    "SET BALANCE = BALANCE + ? " +
-                    "WHERE CARD.CARD_NUM = ?");
-            ps.setDouble(1, value);
-            ps.setString(2, card_num);
+                    "SET BALANCE = BALANCE + '" + value +
+                    "' WHERE CARD.CARD_NUM = '" + card_num + "'");
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
                 System.out.println(WARNING_TAG + " does not exist!");
@@ -152,9 +152,9 @@ public class PassengerHandler {
         Vector<Vector<String>> Passengers = new Vector<>();
 
         try {
-            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.PHONE AS Phone, C.Balance AS Balance" +
+            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.AGE AS Age, P1.PHONE AS Phone, C.Balance AS Balance" +
                     " from PASSENGER_CARD1 P1, PASSENGER_CARD2 P2, Card C " +
-                    "where P1.PHONE = P2.PHONE AND P1.CARD_NUM = C.CARD_NUM";
+                    "where P1.PHONE = P2.PHONE AND P1.CARD_NUM = C.CARD_NUM ORDER BY P2.NAME";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(select);
 
@@ -166,7 +166,9 @@ public class PassengerHandler {
                 tuple.add(String.valueOf(rs.getInt("PIN")));
                 tuple.add(rs.getString("UserID"));
                 tuple.add(rs.getString("Email"));
+                tuple.add(rs.getString("Age"));
                 tuple.add(rs.getString("Phone"));
+                tuple.add(rs.getString("Balance"));
                 Passengers.add(tuple);
             }
 
@@ -188,9 +190,9 @@ public class PassengerHandler {
 
         try {
             Statement stmt = connection.createStatement();
-            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.PHONE AS Phone" +
-            " from PASSENGER_CARD1 P1, PASSENGER_CARD2 P2 " +
-                    "where P1.PHONE = P2.PHONE ";
+            String select = "select P2.Name AS Name, P1.SIN AS SIN, P1.card_num AS CardNum, P1.PIN AS PIN, P1.USER_ID AS UserID, P1.EMAIL AS Email, P1.AGE AS Age, P1.PHONE AS Phone, C.Balance AS Balance" +
+                    " from PASSENGER_CARD1 P1, PASSENGER_CARD2 P2, Card C " +
+                    "where P1.PHONE = P2.PHONE AND P1.CARD_NUM = C.CARD_NUM ORDER BY P2.NAME";
             ResultSet rs = stmt.executeQuery(select);
 
             // get info on ResultSet
@@ -288,7 +290,7 @@ public class PassengerHandler {
     }
 
 
-        private static void rollbackConnection(Connection connection) {
+    private static void rollbackConnection(Connection connection) {
         try  {
             connection.rollback();
         } catch (SQLException e) {
