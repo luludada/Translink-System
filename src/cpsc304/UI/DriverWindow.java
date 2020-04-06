@@ -61,12 +61,14 @@ public class DriverWindow extends JPanel{
         //c.gridy = 3;
         //panel.add(new JLabel(" "), c);
         c.gridy = 1;
+        panel.add(new JLabel("quote when choosing name, phone, license_id"), c);
+        c.gridy = 2;
         panel.add(new JLabel("name"), c);
 
 
         textField2 = new JTextField(15);
         c.gridx = 1;
-        c.gridy = 1;
+        c.gridy = 2;
         panel.add(textField2, c);
 
 
@@ -81,7 +83,7 @@ public class DriverWindow extends JPanel{
 
         JButton button2 = new JButton("Get passenger number");
         button2.addActionListener((e)->delegate.getPassengernum(textField2.getText()));
-        c.gridy = 1;
+        c.gridy = 2;
         panel.add(button2, c);
         //buttonsPanel.add(new JLabel());
 
