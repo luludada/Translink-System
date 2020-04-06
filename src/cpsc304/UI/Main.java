@@ -13,7 +13,7 @@ public class Main{
 
 
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-        boolean didConnect = dbHandler.login("ora_huangk37", "a80403090");
+        boolean didConnect = dbHandler.login("username", "pwd"); // REPLACE with your username & pwd
         if (didConnect) {
             admin.adminHandler = dbHandler.getAdminHandler();
             drive.driverHandler = dbHandler.getDriverHandler();
@@ -22,9 +22,6 @@ public class Main{
         }
 
         start.launch(admin, drive, passenger);
-        //admin.start();
-        //drive.start();
-        //passenger.start();
 
     }
 
