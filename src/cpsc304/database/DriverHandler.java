@@ -17,6 +17,7 @@ public class DriverHandler {
     }
 
     public Driver[] getVehicleRoute(String name) {
+        System.out.println(name);
         //Driver driver = new Driver(0,0,0,0,null," ",null);
         //Driver driver = new Driver(-1,-1,-1,-1,null," ", null);
         ArrayList<Driver> driver = new ArrayList<Driver>();
@@ -24,7 +25,7 @@ public class DriverHandler {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select distinct vehicle_follow_drive1.vehicle_id,vehicle_follow_drive1.route_id"
                     + " from vehicle_follow_drive1,vehicle_follow_drive2 where " +
-                    "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone and " + name);
+                    "vehicle_follow_drive1.phone=vehicle_follow_drive2.phone and " + name +" order by vehicle_id");
 
             while (rs.next()) {
                 Driver d = new Driver(Integer.parseInt(rs.getString("vehicle_id").trim()),

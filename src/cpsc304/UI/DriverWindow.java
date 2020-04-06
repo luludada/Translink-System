@@ -39,35 +39,49 @@ public class DriverWindow extends JPanel{
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
+        c.gridy = 0;
+        String[] attributes = {"name","sin","vehicle_follow_drive1.phone","license_id"};
+        final JComboBox<String> cb1 = new JComboBox<String>(attributes);
+        cb1.setVisible(true);
+        cb1.setEditable(true);
+        panel.add(cb1);
+        c.gridx = 1;
+        String[] relations = {"=","<>",">","<",">=","<="};
+        final JComboBox<String> cb2 = new JComboBox<String>(relations);
+        cb2.setVisible(true);
+        cb2.setEditable(true);
+        panel.add(cb2);
+        c.gridx = 2;
+        textField1 = new JTextField(15);
+        panel.add(textField1, c);
+        c.gridx = 0;
+        //panel.add(new JLabel("Format (replace x by input) : name='x', sin=x, "), c);
+        //c.gridy = 2;
+        //panel.add(new JLabel("vehicle_follow_drive1.phone='x', license_id='x'"), c);
+        //c.gridy = 3;
+        //panel.add(new JLabel(" "), c);
         c.gridy = 1;
-        panel.add(new JLabel("Format (replace x by input) : name='x', sin=x, "), c);
-        c.gridy = 2;
-        panel.add(new JLabel("vehicle_follow_drive1.phone='x', license_id='x'"), c);
-        c.gridy = 3;
-        panel.add(new JLabel(" "), c);
-        c.gridy = 4;
         panel.add(new JLabel("name"), c);
 
-        textField1 = new JTextField(15);
+
         textField2 = new JTextField(15);
         c.gridx = 1;
         c.gridy = 1;
-        panel.add(textField1, c);
-        c.gridy = 4;
         panel.add(textField2, c);
 
 
         //JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
         JButton button1 = new JButton("Get Vehicle id and Route id");
-        button1.addActionListener((e)->delegate.getVehicleRoute(textField1.getText()));
-        c.gridx = 2;
-        c.gridy = 1;
+        button1.addActionListener((e)->delegate.getVehicleRoute(cb1.getSelectedItem().toString()+
+                cb2.getSelectedItem().toString()+textField1.getText()));
+        c.gridx = 3;
+        c.gridy = 0;
         panel.add(button1, c);
         //panel.add(new JLabel());
 
         JButton button2 = new JButton("Get passenger number");
         button2.addActionListener((e)->delegate.getPassengernum(textField2.getText()));
-        c.gridy = 4;
+        c.gridy = 1;
         panel.add(button2, c);
         //buttonsPanel.add(new JLabel());
 
