@@ -22,7 +22,8 @@ public class JoinWindow extends JFrame implements ActionListener {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         JButton joinBtn = new JButton("Find ALl Passenger Name");
-        joinBtn.setBounds(100,200, 200,30);
+        joinBtn.setBounds(100,200, 100,30);
+
         joinBtn.addActionListener(this);
         joinBtn.setActionCommand("findName");
         add(joinBtn);

@@ -29,6 +29,7 @@ public class InsertWindow extends JFrame implements ActionListener {
     private JButton back;
 
     public InsertWindow(DatabaseConnectionHandler dbhandler) {
+
         super("Insert Window");
         this.dbhandler = dbhandler;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));

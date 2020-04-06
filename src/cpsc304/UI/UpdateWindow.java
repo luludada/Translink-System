@@ -23,23 +23,17 @@ public class UpdateWindow extends JFrame implements ActionListener {
         super("Update Window");
         this.dbhandler = dbhandler;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-        GridBagLayout gb = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-
-        JPanel contentPane = new JPanel(gb);
+        JPanel contentPane = new JPanel();
         setContentPane(contentPane);
 
         JLabel titleLabel = new JLabel("Update Passenger Info");
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.PLAIN,18));
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(10, 10, 10, 10);
-        gb.setConstraints(titleLabel, c);
-        contentPane.add(titleLabel);
+        titleLabel.setBounds(200, 50, 200, 30);
+        add(titleLabel);
 
         JLabel passengerCard1 = new JLabel("Update PassengerCard1");
-        passengerCard1.setBounds(200, 100, 100, 30);
-        contentPane.add(passengerCard1);
+        passengerCard1.setBounds(300, 100, 100, 30);
+        add(passengerCard1);
+
         //Not need for passenger_card2 since you only change card 2 when you update phone, so combine at same time
 
         String[] P1attributes = {"phone", "email"};
@@ -56,14 +50,13 @@ public class UpdateWindow extends JFrame implements ActionListener {
 
         testField1 = new JTextField(TEXT_FIELD_WIDTH);
         testField1.setUI(new TransparentText("  Update your PassengerCard_1 Data", Color.gray));
-        testField1.setBounds(220,200, 100,30);
+        testField1.setBounds(220,200, 200,30);
         add(testField1);
 
         user_id = new JTextField(TEXT_FIELD_WIDTH);
         user_id.setUI(new TransparentText("  Enter User ID", Color.gray));
         user_id.setBounds(220,200, 100,30);
         add(user_id);
-
 
         JButton updatePassengerBtn = new JButton("Update PassengerCard1");
         updatePassengerBtn.setBounds(260,250, 100,30);
@@ -72,21 +65,21 @@ public class UpdateWindow extends JFrame implements ActionListener {
         add(updatePassengerBtn);
 
         JLabel Card = new JLabel("Update Card Info");
-        Card.setBounds(200, 300, 100, 30);
+        Card.setBounds(200, 400, 100, 30);
         contentPane.add(Card);
 
         card_num = new JTextField(TEXT_FIELD_WIDTH);
         card_num.setUI(new TransparentText("  Enter User ID", Color.gray));
-        card_num.setBounds(100,350, 100,30);
+        card_num.setBounds(100,450, 100,30);
         add(card_num);
 
         balance = new JTextField(TEXT_FIELD_WIDTH);
         balance.setUI(new TransparentText("  Update your Card Balance", Color.gray));
-        balance.setBounds(240,350, 100,30);
+        balance.setBounds(240,450, 100,30);
         add(balance);
 
         JButton updateCardBtn = new JButton("Update Card");
-        updateCardBtn.setBounds(260,400, 100,30);
+        updateCardBtn.setBounds(260,450, 100,30);
         updateCardBtn.addActionListener(this);
         updateCardBtn.setActionCommand("updateCard");
         add(updateCardBtn);

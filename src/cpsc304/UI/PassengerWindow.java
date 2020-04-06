@@ -34,8 +34,6 @@ public class PassengerWindow extends JFrame implements ActionListener {
     }
     private void init() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
 
         JButton insertBtn = new JButton("Insert Passenger");
         insertBtn.setBounds(100,100, 200,30);
@@ -56,8 +54,8 @@ public class PassengerWindow extends JFrame implements ActionListener {
         add(joinBtn);
 
         add(panel);
-        setLocationRelativeTo(null);
         setVisible(true);
+
     }
 
     @Override
