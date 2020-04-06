@@ -89,10 +89,8 @@ public class PassengerHandler {
     //Update with String
     public static void updatePassengerStr(String attribute, String value, String user_id, Connection connection) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET ? = ? WHERE USER_ID = ?");
-            ps.setString(1, attribute);
-            ps.setString(2, value);
-            ps.setString(3, user_id);
+            PreparedStatement ps = connection.prepareStatement("UPDATE PASSENGER_CARD1 SET " + attribute + " = " + value + " WHERE USER_ID = " + user_id);
+
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
                 System.out.println(WARNING_TAG + " Passenger " + user_id + " does not exist!");

@@ -94,7 +94,6 @@ public class InsertWindow extends JFrame implements ActionListener {
 
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Insert Passenger")) {
@@ -105,7 +104,7 @@ public class InsertWindow extends JFrame implements ActionListener {
                 int age = Integer.parseInt(Age.getText());
                 double balance  = 0;
                 int cvn = random.nextInt(999);
-                PassengerCard1 p1 = new PassengerCard1(sin, cardNo, Phone.getText(), user_id.getText(), Email.getText(), pin, age);
+                PassengerCard1 p1 = new PassengerCard1(sin, Phone.getText(), user_id.getText(), Email.getText(), age, pin, cardNo);
                 PassengerCard2 p2 = new PassengerCard2(Phone.getText(), Name.getText());
                 Card card = new Card(cardNo, balance, cvn);
                 dbhandler.insertPassengerCard(p1, p2, card);

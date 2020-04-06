@@ -14,14 +14,15 @@ public class PassengerCard1 {
 
 
 
-    public PassengerCard1(int SIN, String card_num, String phone, String user_id, String email, int PIN, int age) {
+    public PassengerCard1(int SIN,  String phone, String user_id, String email, int age, int PIN, String card_num) {
         this.SIN = SIN;
-        this.card_num = card_num;
-        this.PIN = PIN;
         this.phone = phone;
         this.user_id = user_id;
         this.email = email;
         this.age = age;
+        this.PIN = PIN;
+        this.card_num = card_num;
+
     }
 
 

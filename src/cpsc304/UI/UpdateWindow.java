@@ -96,11 +96,11 @@ public class UpdateWindow extends JFrame implements ActionListener {
             case "Update PassengerCard1":
                 String attribute = cb1.getSelectedItem().toString();
                 dbhandler.updatePassengerStr(attribute, testField1.getText(), user_id.getText());
-                tb.updateTable(dbhandler.getAllPassenger(),dbhandler.getPassengerCardColumn(), "Passenger Card");
+                tb.updateTable(dbhandler.getAllPassenger(), dbhandler.getPassengerCardColumn(), "Passenger Card");
             case "Update Card":
                 double value = Double.parseDouble(balance.getText());
                 dbhandler.updatePassengerCardBalance(value, card_num.getText());
-                tb.updateTable(dbhandler.getAllCard(),dbhandler.getCardColumn(), "Card");
+                tb.updateTable(dbhandler.getAllCard(), dbhandler.getCardColumn(), "Card");
         }
     }
 }
